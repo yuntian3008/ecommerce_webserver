@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,21 +17,26 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+Route::get('/', function (Request $request) {
+    // $request->session()->flash('flash.dangerBanner', 'Yay it works!');
+    return Inertia::render('Home',[
+        'carouselImages' => [
+            asset('dev_assets/carousel-1.jpg'),
+            asset('dev_assets/carousel-2.jpg'),
+            asset('dev_assets/carousel-3.jpg'),
+        ],
+        'home-header-svg' => asset('dev_assets/home_header.svg'),
     ]);
-});
+})->name('home');
+
+
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return Inertia::render('Dashboard');
+    // })->name('dashboard');
 });
