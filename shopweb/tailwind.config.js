@@ -27,6 +27,10 @@ module.exports = {
                 '16/9': '16 / 9',
                 '9/16': '9 / 16',
             },
+            animatedSettings: {
+                animatedSpeed: 400,
+                classes: ['fadeInUp']
+            }
         },
     },
 
@@ -34,6 +38,7 @@ module.exports = {
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
         require('daisyui'),
+        require('tailwindcss-animatecss')
     ],
 
     daisyui: {

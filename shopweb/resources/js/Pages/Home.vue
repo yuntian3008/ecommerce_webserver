@@ -5,6 +5,7 @@ import VueCarouselImageItem from '@/Components/VueCarousel/VueCarouselImageItem.
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import ProductCard from '@/Components/App/ProductCard.vue';
+import HoverableProductCard from '@/Components/App/HoverableProductCard.vue';
 
 
 defineProps({
@@ -18,6 +19,7 @@ const carouselData = ref();
 
 <template>
     <AppLayout title="Khám phá">
+        <!-- HEADER -->
         <template #header>
             <div class="flex gap-8 items-stretch z-0">
                 <div class="basis-2/5 flex flex-col justify-center gap-4">
@@ -30,59 +32,17 @@ const carouselData = ref();
                 </div>
                 <div class="basis-3/5 relative">
                     <img class="w-full -mt-20  z-0" :src="homeHeaderSvg" alt=""/>
-                    <ProductCard class="absolute right-32 top-32 shadow-none" size="large" :imgAspectRatio="'4/3'" name="Simple Machine" price="$40" image="https://placeimg.com/400/225/arch"/>
+                    <ProductCard class="absolute right-32 top-32 shadow-none" size="large" :imgAspectRatio="'4/3'" name="Simple Machine" price="$40" image="http://localhost:8000/dev_assets/cm1.webp"/>
                 </div>
-
-                <!-- <div class="grow"></div>
-                <div class="basis-1/5">
-                    <ul class="menu bg-neutral text-neutral-content p-4 shadow-lg rounded-box">
-                        <li><a>Item 1</a></li>
-                        <li><a>Item 2</a></li>
-                        <li><a>Item 1</a></li>
-                        <li><a>Item 2</a></li>
-                    </ul>
-                </div>
-                <div class="basis-3/5">
-                    <div class="grid grid-rows-2 grid-flow-col gap-4">
-                        <div class="row-span-2 col-span-2 relative">
-                            <div class="carousel w-full rounded-box">
-                                <div class="carousel-item w-full" v-for="( img, index) in $props.carouselImages" :key="i" :id="'item'+ index">
-                                    <VueCarouselImageItem :src="img"/>
-                                </div>
-                            </div>
-                            <div class="absolute bottom-0 left-0 right-0">
-                                    <div class="flex justify-center gap-x-2">
-                                        <a class="bg-primary w-3 h-2 rounded-box" v-for="( img, index) in $props.carouselImages" :key="i" :href="'#item'+ index">
-                                        </a>
-                                    </div>
-
-                                </div>
-
-                        </div>
-                        <div class="card card-compact bg-base-100 shadow-xl">
-                            <figure><img src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
-                            <div class="card-body">
-                                <h2 class="card-title">Shoes!</h2>
-                                <p>If a dog chews shoes whose shoes does he choose?</p>
-                                <div class="card-actions justify-end">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card card-compact bg-base-100 shadow-xl">
-                            <figure><img src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
-                            <div class="card-body">
-                                <h2 class="card-title">Shoes!</h2>
-                                <p>If a dog chews shoes whose shoes does he choose?</p>
-                                <div class="card-actions justify-end">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="grow"></div> -->
             </div>
         </template>
+        <div class="container mx-auto mb-8">
+            <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-16">
+                <HoverableProductCard name="Simple Machine" price="$40" v-for="n in 8" :image="'http://localhost:8000/dev_assets/cm' + n + '.webp'"/>
+            </div>
+        </div>
+
+
 
 
 
