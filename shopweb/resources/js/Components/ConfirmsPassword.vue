@@ -11,15 +11,15 @@ const emit = defineEmits(['confirmed']);
 defineProps({
     title: {
         type: String,
-        default: 'Confirm Password',
+        default: 'Xác nhận mật khẩu',
     },
     content: {
         type: String,
-        default: 'For your security, please confirm your password to continue.',
+        default: 'Để bảo mật, vui lòng xác nhận mật khẩu của bạn để tiếp tục.',
     },
     button: {
         type: String,
-        default: 'Confirm',
+        default: 'Xác nhận',
     },
 });
 
@@ -90,7 +90,7 @@ const closeModal = () => {
                         v-model="form.password"
                         type="password"
                         class="mt-1 block w-3/4"
-                        placeholder="Password"
+                        placeholder="Mật khẩu"
                         @keyup.enter="confirmPassword"
                     />
 
@@ -100,7 +100,7 @@ const closeModal = () => {
 
             <template #footer>
                 <SecondaryButton @click="closeModal">
-                    Cancel
+                    Hủy
                 </SecondaryButton>
 
                 <PrimaryButton

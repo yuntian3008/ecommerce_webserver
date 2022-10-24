@@ -19,7 +19,7 @@ use Inertia\Inertia;
 
 Route::get('/', function (Request $request) {
     // $request->session()->flash('flash.dangerBanner', 'Yay it works!');
-    return Inertia::render('Home',[
+    return Inertia::render('Shop/Home',[
         'carouselImages' => [
             asset('dev_assets/carousel-1.jpg'),
             asset('dev_assets/carousel-2.jpg'),
@@ -28,6 +28,13 @@ Route::get('/', function (Request $request) {
         'home-header-svg' => asset('dev_assets/home_header.svg'),
     ]);
 })->name('home');
+
+Route::get('/product-slug', function (Request $request) {
+    // $request->session()->flash('flash.dangerBanner', 'Yay it works!');
+    return Inertia::render('Shop/Product',[
+
+    ]);
+})->name('product');
 
 
 

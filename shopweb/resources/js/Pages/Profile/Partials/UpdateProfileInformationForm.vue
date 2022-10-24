@@ -79,11 +79,11 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            Thông tin cá nhân
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            Cập nhật thông tin cá nhân và tài khoản của bạn
         </template>
 
         <template #form>
@@ -176,11 +176,11 @@ const clearPhotoFileInput = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
+                Đã lưu.
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                Lưu
             </PrimaryButton>
         </template>
     </FormSection>

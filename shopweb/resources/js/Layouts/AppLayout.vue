@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
@@ -9,12 +9,16 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import MenuItemLink from '@/Components/DaisyUI/MenuItemLink.vue'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import CartMenu from '@/Components/App/CartMenu.vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 defineProps({
     title: String,
 });
 
+const scrolling = ref()
 const showingNavigationDropdown = ref(false);
+const cartRef = ref()
 
 const switchToTeam = (team) => {
     Inertia.put(route('current-team.update'), {
@@ -32,20 +36,26 @@ function isTouchDevice() {
     return window.ontouchstart !== undefined;
 }
 
+const addToCart = (id) => {
+    cartRef.value.addToCart(id);
+}
+
+
+
 </script>
 
 <template>
     <div class="flex flex-col p-4 bg-neutral min-h-screen relative">
-        <div class="bg-gray-100 left-0 w-3/4 h- absolute z-0 -mt-4"></div>
 
         <Head :title="title" />
 
         <Banner />
-        <div class="container mx-auto z-10">
-            <div class="navbar bg-ghost rounded-box mb-4">
+        <div class="container mx-auto z-20 fixed top-0 right-0 left-0">
+            <div class="navbar bg-base-100 rounded-box my-2 bg-opacity-75">
                 <div class="flex-1">
-                    <Link :href="route('home')" class="btn btn-ghost normal-case text-xl">
-                    {{ $page.props.appName }}
+                    <Link :href="route('home')" class="px-2">
+                    <!-- {{ $page.props.appName }} -->
+                        <ApplicationLogo :width="16" :height="16"/>
                     </Link>
                     <!-- <ul class="menu menu-compact menu-horizontal gap-x-2 p-2">
                         <MenuItemLink :href="route('home')" :active="route().current('home')">
@@ -80,27 +90,7 @@ function isTouchDevice() {
                             </button>
                         </div>
                     </div> -->
-                    <div class="dropdown dropdown-end">
-                        <label tabindex="0" class="btn btn-ghost btn-circle">
-                            <div class="indicator">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                                <span class="badge badge-secondary badge-sm indicator-item">8</span>
-                            </div>
-                        </label>
-                        <div tabindex="0" class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
-                            <div class="card-body">
-                                <span class="font-bold text-lg">8 Items</span>
-                                <span class="text-primary">Subtotal: $999</span>
-                                <div class="card-actions">
-                                    <button class="btn btn-primary btn-block">View cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <CartMenu ref="cartRef" />
                     <div v-if="$page.props.user" class="dropdown dropdown-end">
                         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                             <div class="w-10 rounded-full">
@@ -134,14 +124,14 @@ function isTouchDevice() {
 
 
         <!-- Page Heading -->
-        <div class="container mx-auto z-0">
+        <div class="container mx-auto z-0 pt-32">
             <slot name="header" />
         </div>
 
 
         <!-- Page Content -->
         <main class="z-10">
-            <slot />
+            <slot :addToCart="addToCart" />
         </main>
 
         <footer class="footer p-10 bg-base-100 rounded-box text-neutral-content">

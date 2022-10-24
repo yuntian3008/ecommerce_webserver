@@ -18,7 +18,7 @@ const carouselData = ref();
 </script>
 
 <template>
-    <AppLayout title="Khám phá">
+    <AppLayout title="Khám phá" >
         <!-- HEADER -->
         <template #header>
             <div class="flex gap-8 items-stretch z-0">
@@ -36,11 +36,14 @@ const carouselData = ref();
                 </div>
             </div>
         </template>
-        <div class="container mx-auto mb-8">
-            <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-16">
-                <HoverableProductCard name="Simple Machine" price="$40" v-for="n in 8" :image="'http://localhost:8000/dev_assets/cm' + n + '.webp'"/>
+
+        <template v-slot="scope">
+            <div class="container mx-auto mb-8">
+                <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-16">
+                    <HoverableProductCard @addToCart="scope.addToCart" :slug="route('product')" name="Simple Machine" price="$40" v-for="n in 8" :key="n" :id="n" :image="'http://localhost:8000/dev_assets/cm' + n + '.webp'"/>
+                </div>
             </div>
-        </div>
+        </template>
 
 
 

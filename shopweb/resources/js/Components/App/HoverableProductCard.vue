@@ -1,9 +1,14 @@
 <script setup>
 import { computed } from '@vue/reactivity';
+import { Link } from '@inertiajs/inertia-vue3';
 
-
+const emit = defineEmits(["addToCart"]);
 
 const props = defineProps({
+    id: {
+        type: Number,
+        required: true,
+    },
     name: {
         type: String,
         required: true
@@ -20,7 +25,15 @@ const props = defineProps({
         type: String,
         required: true
     },
+    slug: {
+        type: String,
+        required: true,
+    }
 });
+
+const addToCart = () => {
+    emit('addToCart',props.id)
+}
 
 const classes = computed(() => {
     let sizeClass;
@@ -50,7 +63,7 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <div class="group flex flex-col justify-start gap-4 bg-white p-12 rounded-box bg-no-repeat h-96 bg-contain bg-center w-100 bg-origin-content" :style="'background-image: url(' + image + ')'">
+    <Link :href="slug" class="group flex flex-col justify-start gap-4 bg-white p-12 rounded-box bg-no-repeat h-96 bg-contain bg-center w-100 bg-origin-content" :style="'background-image: url(' + image + ')'">
 
         <div class="justify-between bg-secondary p-4 -m-6 hidden group-hover:flex animate__animated animate__fadeInUp rounded-box text-base-300 ">
             <div class="flex flex-col">
@@ -58,14 +71,14 @@ const classes = computed(() => {
                 <div :class="classes.price">{{ price }}</div>
             </div>
             <div class="self-center">
-                <button :class="classes.button">
+                <button :class="classes.button" @click.prevent="addToCart" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" :class="classes.iconButton">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
                 </button>
             </div>
         </div>
-    </div>
+    </Link>
 
 
 </template>
