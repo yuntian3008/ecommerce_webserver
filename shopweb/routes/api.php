@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Category;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +16,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('/test/them', function(Request $request) {
+    Category::create($request->all());
+    // dd($request->name);
+});
+
+Route::patch('/test/capnhat/{id}', function(Request $request, $id) {
+    $category = Category::find($id);
+    $category->products;
+    $category->update($request->all());
+});
+
+
+Route::get('/test/xem', function(Request $request) {
+    $data = Category::all();
+    dd($data);
 });

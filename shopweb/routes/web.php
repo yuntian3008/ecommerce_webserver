@@ -5,7 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Models\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,3 +47,6 @@ Route::middleware([
     //     return Inertia::render('Dashboard');
     // })->name('dashboard');
 });
+
+
+
