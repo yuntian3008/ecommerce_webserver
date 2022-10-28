@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ReviewImage;
 use App\Models\OrderItem;
-
-
+use App\Models\Product;
 
 class Review extends Model
 {
@@ -25,5 +24,10 @@ class Review extends Model
     public function orderItem()
     {
         return $this->belongsTo(OrderItem::class);
+    }
+
+    public function product()
+    {
+        return $this->hasOneThrough(Product::class, OrderItem::class);
     }
 }
