@@ -14,11 +14,11 @@ var spec =
     },
     servers: [
         {
-            url: "https://localhost:8000/api/v1",
+            url: "https://localhost:8000/api",
             description: "Development server"
         },
         {
-            url: "https://meowmeowshop.cielot.com/api/v1",
+            url: "https://mms.cielot.com/api",
             description: "Production server"
         },
     ],
