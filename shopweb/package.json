@@ -26,6 +26,7 @@
     "dependencies": {
         "animate.css": "^4.1.1",
         "daisyui": "^2.28.0",
+        "gsap": "^3.11.3",
         "tailwindcss-animatecss": "^3.0.0",
         "vue-carousel": "^0.18.0",
         "vue3-carousel": "^0.1.46"

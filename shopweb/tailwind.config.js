@@ -29,7 +29,7 @@ module.exports = {
             },
             animatedSettings: {
                 animatedSpeed: 400,
-                classes: ['fadeInUp']
+                classes: ['fadeInUp','fadeOutDown','slideInUp', 'slideOutDown']
             }
         },
     },

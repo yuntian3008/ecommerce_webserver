@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
@@ -34,3 +35,6 @@ Route::get('/test/xem', function(Request $request) {
     $data = Category::all();
     dd($data);
 });
+
+
+Route::post('/auth/login', [AuthController::class,'login']);

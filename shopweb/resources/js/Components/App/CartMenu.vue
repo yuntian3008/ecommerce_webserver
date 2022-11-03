@@ -1,4 +1,5 @@
 <script setup>
+import { Link } from '@inertiajs/inertia-vue3';
 import { computed, ref } from '@vue/reactivity';
 import { onMounted } from '@vue/runtime-core';
 
@@ -35,9 +36,15 @@ const addToCart = (product_id) => {
     })
 }
 
+const syncCart = () => {
+    if (localStorage.cart)
+        cartItems.value = JSON.parse(localStorage.cart);
+}
+
 
 defineExpose({
-    addToCart
+    addToCart,
+    syncCart
 })
 
 </script>
@@ -59,7 +66,7 @@ defineExpose({
                 <span class="font-bold text-lg">{{ cartItems.length }} sản phẩm</span>
                 <span class="text-primary">Subtotal: $999</span>
                 <div class="card-actions">
-                    <button class="btn btn-primary btn-block">View cart</button>
+                    <Link class="btn btn-primary btn-block" :href="route('cart')">View cart</Link>
                 </div>
             </div>
         </div>

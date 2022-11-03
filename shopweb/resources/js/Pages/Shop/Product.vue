@@ -19,7 +19,7 @@ const carouselData = ref();
 </script>
 
 <template>
-    <AppLayout title="Khám phá">
+    <AppLayout title="San pham gi do">
         <!-- HEADER -->
         <template #header>
 

@@ -40,6 +40,10 @@ const addToCart = (id) => {
     cartRef.value.addToCart(id);
 }
 
+const syncCart = () => {
+    cartRef.value.syncCart();
+}
+
 
 
 </script>
@@ -131,7 +135,7 @@ const addToCart = (id) => {
 
         <!-- Page Content -->
         <main class="z-10">
-            <slot :addToCart="addToCart" />
+            <slot :addToCart="addToCart" :cartRef="cartRef" />
         </main>
 
         <footer class="footer p-10 bg-base-100 rounded-box text-neutral-content">
