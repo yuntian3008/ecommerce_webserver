@@ -41,11 +41,11 @@ var spec =
                 tags: ['Auth'],
                 parameters: [
                     {
-                        name: "email",
+                        name: "username",
                         in: "query",
                         required: true,
                         schema: {
-                            $ref: "#components/schemas/email"
+                            $ref: "#components/schemas/username"
                         }
                     },
                     {
@@ -221,6 +221,9 @@ var spec =
                 format: "int64"
             },
             name: {
+                type: "string",
+            },
+            username: {
                 type: "string",
             },
             email: {
