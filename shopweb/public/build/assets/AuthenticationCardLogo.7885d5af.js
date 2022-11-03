@@ -1,0 +1,1 @@
+import{o as t,c as a,w as e,g as o,L as s,a as r}from"./app.0063afc6.js";const n=r("img",{class:"w-32 h-32 bg-white rounded-full",src:"http://localhost:8000/dev_assets/logo-transparent.png",alt:"logo"},null,-1),i={__name:"AuthenticationCardLogo",setup(c){return(l,_)=>(t(),a(o(s),{href:"/"},{default:e(()=>[n]),_:1}))}};export{i as _};

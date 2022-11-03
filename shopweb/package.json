@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build && vite build --ssr && vite build && vite build --ssr --ssr"
+        "build": "vite build && vite build --ssr && vite build && vite build --ssr --ssr",
+        "buildnossr": "vite build"
     },
     "devDependencies": {
         "@chenfengyuan/vue-carousel": "^2.0.0",
