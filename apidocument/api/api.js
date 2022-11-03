@@ -33,7 +33,7 @@ var spec =
         }
     ],
     paths: {
-        "/auth/token": {
+        "/auth/login": {
             post: {
                 operationId: "authToken",
                 summary: "Dùng Tài Khoản lấy access token",
