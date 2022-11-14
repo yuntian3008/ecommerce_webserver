@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Database\Factories\Administrator\SAFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\AdministratorScope;
 
 class Administrator extends Authenticatable
 {
@@ -37,5 +38,15 @@ class Administrator extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get all of the comments for the Administrator
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function administratorScopes()
+    {
+        return $this->hasMany(AdministratorScope::class);
+    }
 
 }
