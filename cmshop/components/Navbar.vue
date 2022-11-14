@@ -1,9 +1,9 @@
 <template>
-  <header>
+  <header class="mb-8">
     <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
       <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
-          <button id="toggleSidebar" aria-expanded="true" aria-controls="sidebar"
+          <button @click="toggleSidebar" id="toggleSidebar" aria-expanded="true" aria-controls="sidebar"
             class="hidden p-2 mr-3 text-gray-600 rounded cursor-pointer lg:inline hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
@@ -11,7 +11,7 @@
                 clip-rule="evenodd"></path>
             </svg>
           </button>
-          <button aria-expanded="true" aria-controls="sidebar"
+          <button @click="toggleSidebar" aria-expanded="true" aria-controls="sidebar"
             class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer lg:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
             <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg">
@@ -72,7 +72,7 @@
                 alt="user photo">
             </button>
             <!-- Dropdown menu -->
-            <transition name="avatar">
+            <transition enter-active-class="animate-zoomIn animate-duration-300" leave-active-class="animate-zoomOut animate-duration-300">
               <div v-if="avatarDropdown" v-click-outside="clickOutAvatarDropdown"
                 class="absolute right-0 rounded-xl top-8 z-50 my-4 w-56 text-base list-none bg-white divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                 id="dropdown">
@@ -153,7 +153,6 @@
 </template>
 
 <script>
-import 'flowbite'
 
 export default {
   name: 'Navbar',
@@ -167,6 +166,9 @@ export default {
     }
   },
   methods: {
+    toggleSidebar() {
+      this.$emit('sidebar');
+    },
     toggleAvatar() {
       this.avatarDropdown = !this.avatarDropdown
     },

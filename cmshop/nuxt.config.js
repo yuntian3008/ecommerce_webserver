@@ -5,6 +5,13 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  // Env: https://nuxtjs.org/docs/configuration-glossary/configuration-env/
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    apiUrl: process.env.API_URL || 'http://localhost:8000/api',
+    baseUrlShop: process.env.BASE_URL_SHOP || 'http://localhost:8000',
+  },
+
   loadingIndicator: {
     name: 'rotating-plane',
     color: '#f59e0b',
@@ -31,13 +38,14 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    'animate.css/animate.compat.css'
+    "flag-icons/css/flag-icons.min.css"
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/utils.client.js', ssr: false },
-    { src: "@/plugins/vClickOutside", ssr: false }
+    { src: "@/plugins/vClickOutside", ssr: false },
+    { src: "@/plugins/axios", ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -54,7 +62,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    '@nuxtjs/toast'
+    '@nuxtjs/toast',
+    // '@nuxtjs/tailwindcss'
   ],
 
   auth: {
@@ -111,7 +120,7 @@ export default {
         },
         options: {
           theme: 'custom',
-          className: 'text-success-content bg-success rounded-lg shadow min-h-38px',
+          className: 'text-white bg-success rounded-lg shadow min-h-38px',
           icon: 'done',
           action: {
             icon: 'close',
@@ -150,7 +159,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://localhost:8000/api',
+    baseURL: process.env.API_URL,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
