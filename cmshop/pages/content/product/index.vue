@@ -3,10 +3,10 @@
     <Modal :show="state.success" :type="'success'" title="Thành công" @close="state.success = false"
       @action="state.success = false" />
     <ConfirmModal :loadingState="true" :show="state.confirm" :list="selectedListConfirm"
-      question="Bạn có chắc muốn xóa những danh mục này?" @close="state.confirm = false" @action="del" />
-    <h1 class="text-4xl font-extrabold dark:text-white mb-8">Danh mục</h1>
+      question="Bạn có chắc muốn xóa những sản phẩm này?" @close="state.confirm = false" @action="del" />
+    <h1 class="text-4xl font-extrabold dark:text-white mb-8">Sản phẩm</h1>
     <div class="flex gap-x-4 items-center pb-4">
-      <SuperButton to="/content/category/create" text="Thêm danh mục">
+      <SuperButton to="/content/product/create" text="Thêm sản phẩm">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
           <path
             d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
@@ -56,11 +56,19 @@
             </svg>
           </template>
         </FormInput>
-      </div>
 
+      </div>
+      <span
+        class="inline-flex items-center gap-x-1 bg-blue-100 text-blue-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+          <path fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
+            clip-rule="evenodd" />
+        </svg>
+        Sản phẩm sẵn sàng hiển thị khi có ít nhất 1 hình ảnh</span>
     </div>
     <div class="overflow-x-auto relative rounded-xl shadow-xl mb-4">
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" class="p-4">
@@ -71,10 +79,16 @@
               </div>
             </th>
             <th scope="col" class="py-3 px-6">
-              Tên danh mục
+              Ảnh sản phẩm
+            </th>
+            <th scope="col" class="py-3 px-6">
+              Tên sản phẩm
             </th>
             <th scope="col" class="py-3 px-6">
               Mô tả
+            </th>
+            <th scope="col" class="py-3 px-6">
+              Đơn giá
             </th>
             <th scope="col" class="py-3 px-6">
               Chỉnh sửa lần cuối
@@ -93,6 +107,10 @@
                 Liên kết
               </span>
             </th>
+            <th scope="col" class="py-3 px-6">
+
+            </th>
+
             <!-- <th scope="col" class="py-3 px-6">
               Action
             </th> -->
@@ -107,6 +125,9 @@
                   class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
               </div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="w-32 h-32 bg-gray-200 rounded-lg dark:bg-gray-700"></div>
             </td>
             <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
               <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
@@ -123,44 +144,106 @@
             <td class="py-4 px-6">
               <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
             </td>
+            <td class="py-4 px-6">
+              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            </td>
+
           </tr>
 
         </tbody>
         <tbody v-else>
-          <tr v-if="!categories.length">
+          <tr v-if="!products.length">
             <td colspan="1000" class="p-4 text-center">
               Không có dữ liệu
             </td>
           </tr>
-          <tr v-for="(category) in categories" :key="category.id"
+          <tr v-for="(product) in products" :key="product.id"
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <td class="p-4 w-4">
               <div class="flex items-center">
-                <input id="checkbox-table-search-1" type="checkbox" v-model="selected" :value="category"
+                <input id="checkbox-table-search-1" type="checkbox" v-model="selected" :value="product"
                   class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
               </div>
             </td>
-            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white cursor-pointer"
-              @click="$router.push({ path: '/content/category/' + category.id })">
-              {{ category.name }}
+            <td class="py-4 px-6">
+              <img v-if="product.image" class="max-w-[100px] h-auto rounded-lg"
+                :src="product.image.url"
+                alt="image description">
+              <button v-else type="button" @click.prevent="$router.push(`/content/product/${product.id}/image`)"
+                class="inline-flex items-center whitespace-nowrap gap-x-0.5 py-1.5 px-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                  <path
+                    d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                </svg>
+
+                Thêm ảnh</button>
+            </td>
+            <th scope="row" class="py-4 px-6 font-medium text-gray-900 dark:text-white cursor-pointer"
+              @click="$router.push({ path: '/content/product/' + product.id })">
+              <span class="inline-flex items-center gap-x-1">
+                {{ product.name }}
+                <span v-if="product.product_images.length == 0" v-tooltip="{ content: 'Sản phẩm chưa sẵn sàng hiển thị, vui lòng thêm hình ảnh'}"
+                  class="inline-flex items-center text-sm font-semibold text-orange-100 bg-orange-500 rounded-full dark:bg-orange-200 dark:text-orange-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                  </svg>
+                  <span class="sr-only">Icon description</span>
+                </span>
+              </span>
+
             </th>
-            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/category/' + category.id })">
-              <span v-once> {{ category.desc ?? '&lt;trống&gt;' }}</span>
+            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/product/' + product.id })">
+              <span v-tooltip="{ content: product.desc }"> {{ product.desc.slice(0, 64) + (product.desc.length >= 64 ?
+                  '...' : '')
+              }}</span>
             </td>
-            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/category/' + category.id })">
-              {{ $dayjs(category.updated_at).format("llll") }}
+            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/product/' + product.id })">
+              <span>{{
+                Intl.NumberFormat('vi-VN', {
+                  style: 'currency', currency:
+                    'VND'
+                }).format(product.unit_price)
+            }}</span>
             </td>
-            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/category/' + category.id })">
-              {{ $dayjs(category.created_at).format("llll") }}
+            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/product/' + product.id })">
+              {{ $dayjs(product.updated_at).format("llll") }}
+            </td>
+            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/product/' + product.id })">
+              {{ $dayjs(product.created_at).format("llll") }}
             </td>
             <td class="py-4 px-6">
-              <Link :href="`${baseUrlShop}/${category.slug}`" color="blue" :text="`${baseUrlShop}/${category.slug}`" />
+              <SuperButton :href="`${baseUrlShop}/products/${product.slug}`">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                  <path fill-rule="evenodd"
+                    d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                    clip-rule="evenodd" />
+                  <path fill-rule="evenodd"
+                    d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                    clip-rule="evenodd" />
+                </svg>
+
+              </SuperButton>
             </td>
+            <td class="py-4 px-6">
+              <button type="button" @click.prevent="$router.push(`/content/product/${product.id}/image`)"
+                class="inline-flex items-center gap-x-1 py-2 px-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                  <path fill-rule="evenodd"
+                    d="M1 5.25A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25v9.5A2.25 2.25 0 0116.75 17H3.25A2.25 2.25 0 011 14.75v-9.5zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 00.75-.75v-2.69l-2.22-2.219a.75.75 0 00-1.06 0l-1.91 1.909.47.47a.75.75 0 11-1.06 1.06L6.53 8.091a.75.75 0 00-1.06 0l-2.97 2.97zM12 7a1 1 0 11-2 0 1 1 0 012 0z"
+                    clip-rule="evenodd" />
+                </svg>
+                Quản lí ảnh</button>
+            </td>
+
           </tr>
         </tbody>
       </table>
     </div>
+
+
 
     <nav class="flex justify-between items-center pt-4" aria-label="Table navigation">
       <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Đang hiển thị <span
@@ -182,14 +265,14 @@
 
 <script>
 export default {
-  name: 'ContentCategory',
+  name: 'ContentProduct',
   transition: {
     enterActiveClass: 'animate-fadeIn',
   },
   data: function () {
     return {
       pagination: {},
-      categories: [],
+      products: [],
       baseUrlShop: '',
       selected: [],
       state: {
@@ -210,20 +293,20 @@ export default {
       this.debounceSearching()
     }
   },
-  created () {
-    this.debounceSearching = this.$_.debounce( function () {
+  created() {
+    this.debounceSearching = this.$_.debounce(function () {
       this.searching();
-    },500)
+    }, 500)
   },
   async fetch() {
-    this.fetchUrl = '/content/categories'
+    this.fetchUrl = '/content/products'
     this.baseUrlShop = process.env.baseUrlShop
   },
   // async asyncData({ $axios, env }) {
-  //   const categories = await $axios.get('/content/categories')
+  //   const products = await $axios.get('/content/products')
   //   return {
-  //     pagination = categories.data,
-  //     categories: categories.data.data,
+  //     pagination = products.data,
+  //     products: products.data.data,
   //     baseUrlShop: env.baseUrlShop,
   //   }
   // },
@@ -239,24 +322,24 @@ export default {
     },
     async fetching(url, params = {}) {
       try {
-        const categories = await this.$axios.get(url, { params })
-        this.pagination = categories.data
-        this.categories = this.pagination.data;
+        const products = await this.$axios.get(url, { params })
+        this.pagination = products.data
+        this.products = this.pagination.data;
       }
       catch (e) { }
     },
     async del(callback) {
       let removed = [];
       try {
-        for (const [i, category] of this.selected.entries()) {
-          await this.$axios.delete('/content/categories/' + category.id)
+        for (const [i, product] of this.selected.entries()) {
+          await this.$axios.delete('/content/products/' + product.id)
           this.$toast.global.success({
-            message: `Đã xóa ${category.name}`
+            message: `Đã xóa ${product.name}`
           })
-          this.categories.splice(this.categories.findIndex(c => c.id === category.id), 1)
+          this.products.splice(this.products.findIndex(c => c.id === product.id), 1)
           removed.push(i)
 
-          if (this.categories.length == 0 && this.pagination.prev_page_url != null) {
+          if (this.products.length == 0 && this.pagination.prev_page_url != null) {
             this.paginate(this.pagination.prev_page_url)
           }
         }
@@ -278,8 +361,8 @@ export default {
     },
     selectedListConfirm() {
       let list = [];
-      this.selected.forEach(function (category) {
-        list.push(`${category.name} (${category.slug})`)
+      this.selected.forEach(function (product) {
+        list.push(`${product.name} (${product.slug})`)
       })
 
       return list
@@ -287,14 +370,14 @@ export default {
     selectAll: {
       get: function () {
         if (this.$fetchState.pending) return false;
-        return this.categories ? this.selected.length == this.categories.length : false;
+        return this.products ? this.selected.length == this.products.length : false;
       },
       set: function (value) {
         var selected = [];
 
         if (value) {
-          this.categories.forEach(function (category) {
-            selected.push(category);
+          this.products.forEach(function (product) {
+            selected.push(product);
           });
         }
 

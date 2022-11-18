@@ -75,6 +75,7 @@ export default {
         this.$router.push('/')
       } catch (e) {
         if (!e.response) {
+          console.log(e)
           app.$toast.global.myError()
         }
         else
