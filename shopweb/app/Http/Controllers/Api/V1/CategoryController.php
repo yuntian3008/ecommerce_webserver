@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,10 +16,10 @@ class CategoryController extends Controller
 {
     public function __construct() {
         $this->middleware(['auth:api']);
-        $this->middleware(['scopes:read-categories'])->only(['index','show']);
-        $this->middleware(['scopes:create-categories'])->only('store');
-        $this->middleware(['scopes:update-categories'])->only('update');
-        $this->middleware(['scopes:delete-categories'])->only('destroy');
+        $this->middleware(['scope:read-categories,*'])->only(['index','show']);
+        $this->middleware(['scope:create-categories,*'])->only('store');
+        $this->middleware(['scope:update-categories,*'])->only('update');
+        $this->middleware(['scope:delete-categories,*'])->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -26,30 +28,38 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::paginate(5);
+        request()->validate([
+            's' => ['nullable','string'],
+            'all' => ['nullable', 'boolean']
+        ]);
 
+
+        if(request()->get('all', false)) {
+            return response()->json(Category::all(), Response::HTTP_OK);
+        }
+
+        $numOfPage = 5;
+        $search = request('s');
+        if ($search)
+            $category = Category::where('name','like',"%{$search}%")
+            ->orWhere('desc','like',"%{$search}%")
+            ->paginate($numOfPage);
+        else
+            $category = Category::paginate($numOfPage);
+
+        $category->withQueryString();
         return response()->json($category, Response::HTTP_OK);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $request->validate([
-            'name' => ['required','string','max:168'],
-        ]);
-        $request->merge([
-            'slug' => Str::slug($request->name,'-','vi') .'-'. Str::random(6)
-        ]);
-        $request->validate([
-            'slug' => ['required','unique:categories'],
-            'desc' => ['nullable','string','max:254'],
-        ]);
-        $category = Category::create($request->only(['name','desc','slug']));
+        $category = Category::create($request->validated());
         return response()->json($category, Response::HTTP_OK);
     }
 
@@ -68,23 +78,13 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Request\UpdateCategoryRequest  $request
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $request->validate([
-            'name' => ['required','string','max:168'],
-        ]);
-        $request->merge([
-            'slug' => $category->name != $request->name ? Str::slug($request->name,'-','vi') .'-'. Str::random(6) : $category->slug
-        ]);
-        $request->validate([
-            'slug' => ['required',Rule::unique('categories')->ignore($category->id)],
-            'desc' => ['nullable','string','max:254'],
-        ]);
-        $category->update($request->only(['name','desc','slug']));
+        $category->update($request->validated());
          return response()->json($category, Response::HTTP_OK);
     }
 

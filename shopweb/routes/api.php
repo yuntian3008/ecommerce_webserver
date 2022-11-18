@@ -3,9 +3,14 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\AdministratorScopeController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\CategoryProductController;
+use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\ProductImageController;
+use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
+use App\Models\Product;
 use Laravel\Passport\Passport;
 
 /*
@@ -42,9 +47,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::prefix('/content')->group(function () {
-    Route::resources([
-        'categories' => CategoryController::class,
-    ]);
+    Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('products',ProductController::class);
+    Route::apiResource('categories.products', CategoryProductController::class)->only(['index','store']);
+    Route::apiResource('users',UserController::class)->only(['index','update']);
+    Route::apiResource('products.product-images', ProductImageController::class)->shallow()->only(['index','store','destroy']);
 });
 
 Route::prefix('/auth')->group(function () {
@@ -55,7 +62,7 @@ Route::prefix('/auth')->group(function () {
 
     Route::get('/scope-test', function() {
     });
-    Route::resources([
+    Route::apiResources([
         'administrators.scopes' => AdministratorScopeController::class,
     ]);
 

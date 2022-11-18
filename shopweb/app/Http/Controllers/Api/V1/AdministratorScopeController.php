@@ -45,7 +45,12 @@ class AdministratorScopeController extends Controller
         foreach ($scopes as $value) {
             $inserts[] = ['scope' => $value ];
         }
-        return $administrator->administratorScopes()->createMany($inserts);
+        $r =  $administrator->administratorScopes()->createMany($inserts);
+
+        foreach($administrator->tokens as $token)
+                $token->revoke();
+
+        return $r;
     }
 
     /**

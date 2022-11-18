@@ -3,78 +3,91 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductImageRequest;
+use App\Http\Requests\UpdateProductImageRequest;
+use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
-class ProductimageController extends Controller
+use Intervention\Image\ImageManager;
+
+class ProductImageController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Product $product)
     {
-        //
-        $product = ProductImage::all();
+        $product->category;
+        $product->product_images = $product->productImages()->orderByRaw('ISNULL(priority), priority ASC')->get();
         return response()->json($product, Response::HTTP_OK);
-
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreProductImageRequest  $request
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductImageRequest $request, Product $product)
     {
-        //
-        $product = ProductImage::create($request->all());
-        return response()->json($product, Response::HTTP_OK);
+        $imageManager = new ImageManager();
 
+        $image = $imageManager->make($request->safe()->image)->widen(800, function ($constraint) {
+            $constraint->upsize();
+        })->encode('jpg');
+
+        Storage::disk('product-image')->put($request->safe()->path,$image);
+
+        $productImage = $product->productImages()->create($request->safe()->except('image'));
+
+        // var_dump([$image->mime(),$imageName,Storage::disk('product-image')->url($imageName)]);
+
+        return response()->json($productImage, Response::HTTP_OK);
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  \App\Models\Product  $product
      * @param  \App\Models\ProductImage  $productImage
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductImage $productImage)
+    public function show(Product $product, ProductImage $productImage)
     {
         //
-        return response()->json($productImage, Response::HTTP_OK);
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateProductImageRequest  $request
+     * @param  \App\Models\Product  $product
      * @param  \App\Models\ProductImage  $productImage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductImage $productImage)
+    public function update(UpdateProductImageRequest $request, Product $product, ProductImage $productImage)
     {
         //
-        $productImage->update($request->all());
-        return response()->json($productImage, Response::HTTP_OK);
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\Models\Product  $product
      * @param  \App\Models\ProductImage  $productImage
      * @return \Illuminate\Http\Response
      */
     public function destroy(ProductImage $productImage)
     {
-        //
+        Storage::disk('product-image')->delete($productImage->path);
         $productImage->delete();
         return response()->json($productImage, Response::HTTP_OK);
-
     }
 }

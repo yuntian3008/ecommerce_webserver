@@ -8,17 +8,25 @@ use App\Models\Category;
 use App\Models\OrderItem;
 use App\Models\ProductImage;
 use App\Models\Review;
-
-
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
-        'name', 'desc', 'slug', 'spesc', 'unit_price'
+        'name', 'desc', 'slug', 'specs', 'unit_price'
     ];
+
+    protected $appends = [
+        'image',
+    ];
+
+    public function getImageAttribute()
+    {
+        return $this->productImages()->orderByRaw('ISNULL(priority), priority ASC')->first();
+    }
 
     public function category()
     {

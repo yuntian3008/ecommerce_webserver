@@ -36,6 +36,14 @@ return [
             'throw' => false,
         ],
 
+        'product-image' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/product-image'),
+            'url' => env('APP_URL').'/storage/product-image',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
