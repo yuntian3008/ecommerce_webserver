@@ -43,7 +43,7 @@ class StoreProductImageRequest extends FormRequest
         return [
             // 'image' => ['required','base64image','base64mimes:png,jpg,jpeg','base64dimensions:min_width=800,min_height=800,ratio=1/1','base64max:15360'],
             'path' => ['required'],
-            'image' => ['required','image','mimes:png,jpg,jpeg','dimensions:min_width=800,min_height=800,ratio=1/1','max:15360'],
+            'image' => ['required','image','mimes:png,jpg,jpeg','dimensions:min_width=600,min_height=600,ratio=1/1','max:15360'],
             'priority' => ['nullable','numeric','min:0']
         ];
     }
