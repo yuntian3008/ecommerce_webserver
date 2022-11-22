@@ -20,12 +20,17 @@ class Product extends Model
     ];
 
     protected $appends = [
-        'image',
+        'image', 'url'
     ];
 
     public function getImageAttribute()
     {
         return $this->productImages()->orderByRaw('ISNULL(priority), priority ASC')->first();
+    }
+
+    public function getUrlAttribute()
+    {
+        return url();
     }
 
     public function category()

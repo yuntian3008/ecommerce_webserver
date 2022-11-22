@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Str;
 /*
 |--------------------------------------------------------------------------
@@ -18,23 +20,13 @@ use Illuminate\Support\Str;
 |
 */
 
-Route::get('/', function (Request $request) {
-    echo phpinfo();
-    // $request->session()->flash('flash.dangerBanner', 'Yay it works!');
-    // return Inertia::render('Shop/Home',[
-    //     'carouselImages' => [
-    //         asset('dev_assets/carousel-1.jpg'),
-    //         asset('dev_assets/carousel-2.jpg'),
-    //         asset('dev_assets/carousel-3.jpg'),
-    //     ],
-    //     'home-header-svg' => asset('dev_assets/home_header.svg'),
-    // ]);
-})->name('home');
+Route::get('/', [HomeController::class,'index'])->name('home');
 
-Route::get('/product-slug', function (Request $request) {
+
+Route::get('/product/{product:slug}', function (Product $product) {
     // $request->session()->flash('flash.dangerBanner', 'Yay it works!');
     return Inertia::render('Shop/Product',[
-
+        'product' => $product
     ]);
 })->name('product');
 

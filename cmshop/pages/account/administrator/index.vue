@@ -93,7 +93,7 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4 justify-items-center" v-else>
       <div v-if="!administrators.length"
-        class="col-span-full inline-flex items-center justify-center shadow-xl rounded-xl border border-gray-100">
+        class="col-span-full inline-flex w-full items-center justify-center shadow-xl rounded-xl border border-gray-100">
         <span colspan="1000" class="p-4 text-center text-sm text-gray-500">
           Không có dữ liệu
         </span>

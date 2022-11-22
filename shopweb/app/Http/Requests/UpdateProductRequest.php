@@ -43,7 +43,7 @@ class UpdateProductRequest extends FormRequest
             'category_id' => ['nullable','exists:categories,id'],
             'name' => ['required', 'string', 'max:168'],
             'slug' => ['required', Rule::unique('products')->ignore($product->id)],
-            'desc' => ['required', 'string', 'max:254'],
+            'desc' => ['required', 'string', 'max:5120'],
             'specs' => ['required', 'json'],
             'unit_price' => ['required','numeric','min:0']
         ];

@@ -42,7 +42,7 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:168'],
             'slug' => ['required', Rule::unique('categories')->ignore($category->id)],
-            'desc' => ['nullable', 'string', 'max:254'],
+            'desc' => ['nullable', 'string', 'max:5120'],
         ];
     }
 

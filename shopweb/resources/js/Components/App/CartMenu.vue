@@ -2,8 +2,10 @@
 import { Link } from '@inertiajs/inertia-vue3';
 import { computed, ref } from '@vue/reactivity';
 import { onMounted } from '@vue/runtime-core';
-
+import { useToast } from "vue-toastification";
 const cartItems = ref([])
+
+const toast = useToast();
 
 onMounted(() => {
     if (localStorage.cart)
@@ -34,6 +36,7 @@ const addToCart = (product_id) => {
     upsertCart({
         id: product_id
     })
+    toast.success("Thêm vào giỏ hàng thành công", { timeout: 1500 })
 }
 
 const syncCart = () => {
@@ -63,10 +66,9 @@ defineExpose({
         </label>
         <div tabindex="0" class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
             <div class="card-body">
-                <span class="font-bold text-lg">{{ cartItems.length }} sản phẩm</span>
-                <span class="text-primary">Subtotal: $999</span>
+                <span class="font-bold text-lg">Có {{ cartItems.length }} sản phẩm</span>
                 <div class="card-actions">
-                    <Link class="btn btn-primary btn-block" :href="route('cart')">View cart</Link>
+                    <Link class="btn btn-primary btn-block" :href="route('cart')">Xem giỏ hàng</Link>
                 </div>
             </div>
         </div>

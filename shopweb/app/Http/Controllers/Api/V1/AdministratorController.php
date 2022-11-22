@@ -94,7 +94,6 @@ class AdministratorController extends Controller
     {
         $administrator->update($request->safe()->except('password'));
 
-
         $password = null;
 
         if ($request->password) {

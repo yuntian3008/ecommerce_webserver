@@ -35,7 +35,7 @@ module.exports = {
     },
 
     plugins: [
-        //require('@tailwindcss/forms'),
+        require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
         require('daisyui'),
         require('tailwindcss-animatecss')

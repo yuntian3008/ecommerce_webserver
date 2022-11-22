@@ -46,32 +46,27 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     $data = Category::all();
 //     dd($data);
 // });
-
-
-Route::prefix('/content')->group(function () {
-    Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('products',ProductController::class);
-    Route::apiResource('categories.products', CategoryProductController::class)->only(['index','store']);
-    Route::apiResource('users',UserController::class)->only(['index','update']);
-    Route::apiResource('products.product-images', ProductImageController::class)->shallow()->only(['index','store','destroy']);
-});
-
-Route::prefix('/account')->group(function () {
-    Route::apiResource('administrators.administrator-scopes',AdministratorScopeController::class)->shallow()->only(['index','store','destroy']);
-    Route::apiResource('administrators', AdministratorController::class);
-    Route::apiResource('scopes', ScopeController::class)->only(['index']);
-
-});
-
-Route::prefix('/auth')->group(function () {
-    Route::post('/login', [AuthController::class,'login']);
-    Route::get('/user', [AuthController::class,'user']);
-    Route::post('/logout',[AuthController::class,'logout']);
-
-
-
-    Route::get('/scope-test', function() {
+Route::name('admin.')->group(function () {
+    Route::prefix('/content')->name('content.')->group(function () {
+        Route::apiResource('categories', CategoryController::class);
+        Route::apiResource('products',ProductController::class);
+        Route::apiResource('categories.products', CategoryProductController::class)->only(['index','store']);
+        Route::apiResource('users',UserController::class)->only(['index','update']);
+        Route::apiResource('products.product-images', ProductImageController::class)->shallow()->only(['index','store','destroy']);
     });
 
+    Route::prefix('/account')->name('account.')->group(function () {
+        Route::apiResource('administrators.administrator-scopes',AdministratorScopeController::class)->shallow()->only(['index','store','destroy']);
+        Route::apiResource('administrators', AdministratorController::class)->except(['delete']);
+        Route::apiResource('scopes', ScopeController::class)->only(['index']);
+        Route::apiResource('users',UserController::class)->only(['index','update']);
+    });
 
+    Route::prefix('/auth')->name('auth.')->group(function () {
+        Route::post('/login', [AuthController::class,'login']);
+        Route::get('/user', [AuthController::class,'user']);
+        Route::post('/logout',[AuthController::class,'logout']);
+        Route::get('/scope-test', function() {
+        });
+    });
 });

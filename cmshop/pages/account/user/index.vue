@@ -2,27 +2,20 @@
   <div class="container mx-auto px-4 lg:px-0">
     <Modal :show="state.success" :type="'success'" title="Thành công" @close="state.success = false"
       @action="state.success = false" />
-    <ConfirmModal :loadingState="true" :show="state.confirm" :list="selectedListConfirm"
-      question="Bạn có chắc muốn xóa những danh mục này?" @close="state.confirm = false" @action="del" />
-    <h1 class="text-4xl font-extrabold dark:text-white mb-8">Danh mục</h1>
+    <ConfirmModal :loadingState="true" :show="confirmation.state" :list="confirmation.messages"
+      question="Bạn có chắc muốn thực hiện thao tác này?" @close="confirmation.state = false" @action="confirmed" />
+
+    <h1 class="text-4xl font-extrabold dark:text-white mb-8">Khách hàng</h1>
     <div class="flex gap-x-4 items-center pb-4">
-      <SuperButton to="/content/category/create" text="Thêm danh mục">
+      <!-- <SuperButton to="/account/user/create" text="Thêm khách hàng">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
           <path
             d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
         </svg>
-      </SuperButton>
-      <transition enter-active-class="animate-bounceIn animate-faster" leave-active-class="animate-bounceOut">
-        <SuperButton v-if="selected.length" @click="state.confirm = true" color="red" text="Xóa mục đã chọn">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-            <path fill-rule="evenodd"
-              d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z"
-              clip-rule="evenodd" />
-          </svg>
-        </SuperButton>
-      </transition>
+      </SuperButton> -->
 
     </div>
+    <!-- Fetch Error -->
     <div v-if="$fetchState.error" role="alert">
       <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-red-700 dark:text-red-800" fill="currentColor"
         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -45,6 +38,8 @@
         </svg>
       </button>
     </div>
+    <!--  -->
+    <!-- Search Form -->
     <div class="flex gap-x-4 items-center justify-between pb-4">
       <div class="flex gap-x-2 items-center">
         <FormInput placeholder="Tìm kiếm" v-model="search" class="max-w-sm">
@@ -57,109 +52,105 @@
           </template>
         </FormInput>
       </div>
-
     </div>
-    <div class="overflow-x-auto relative rounded-xl shadow-xl mb-4">
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" class="p-4">
-              <div class="flex items-center">
-                <input id="checkbox-all-search" type="checkbox" v-model="selectAll"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-              </div>
-            </th>
-            <th scope="col" class="py-3 px-6">
-              Tên danh mục
-            </th>
-            <th scope="col" class="py-3 px-6">
-              Mô tả
-            </th>
-            <th scope="col" class="py-3 px-6">
-              Chỉnh sửa lần cuối
-            </th>
-            <th scope="col" class="py-3 px-6">
-              Khởi tạo
-            </th>
-            <th scope="col" class="py-3 px-6">
-              <span class="inline-flex items-center gap-x-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                  <path
-                    d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.667l3-3z" />
-                  <path
-                    d="M11.603 7.963a.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.667l-3 3a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 105.656 5.656l3-3a4 4 0 00-.225-5.865z" />
-                </svg>
-                Liên kết
-              </span>
-            </th>
-            <!-- <th scope="col" class="py-3 px-6">
-              Action
-            </th> -->
-          </tr>
-        </thead>
-        <tbody v-if="$fetchState.pending || (isRequestLoading.state && isRequestLoading.url == fetchUrl)">
-          <tr v-for="n in 5" :key="n"
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 animate-twPulse">
-            <td class="p-4 w-4">
-              <div class="flex items-center">
-                <input id="checkbox-table-search-1" type="checkbox" disabled
-                  class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-              </div>
-            </td>
-            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-            </th>
-            <td class="py-4 px-6">
-              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-            </td>
-            <td class="py-4 px-6">
-              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-            </td>
-            <td class="py-4 px-6">
-              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-            </td>
-            <td class="py-4 px-6">
-              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-            </td>
-          </tr>
+    <!--  -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4 justify-items-center"
+      v-if="$fetchState.pending || (isRequestLoading.state && isRequestLoading.url == fetchUrl)">
+      <!-- Item skeleton -->
+      <div v-for="(n) in 8" :key="n"
+        class="w-full max-w-sm bg-gray-200 animate-twPulse animate-infinite border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex justify-end px-4 pt-4">
+          <button id="dropdownButton" data-dropdown-toggle="dropdown"
+            class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+            type="button">
+            <span class="sr-only">Open dropdown</span>
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
+              </path>
+            </svg>
+          </button>
+        </div>
+        <div class="flex flex-col items-center pb-10">
+          <div class="w-24 h-24 mb-3 rounded-full shadow-lg bg-gray-300 animate-twPulse animate-infinite"></div>
+          <h5 class="mb-1 text-xl font-medium bg-gray-300 animate-twPulse animate-infinite w-24 h-7 rounded-lg"></h5>
+          <span class="text-sm bg-gray-300 animate-twPulse animate-infinite w-20 h-5 rounded-lg"></span>
 
-        </tbody>
-        <tbody v-else>
-          <tr v-if="!categories.length">
-            <td colspan="1000" class="p-4 text-center">
-              Không có dữ liệu
-            </td>
-          </tr>
-          <tr v-for="(category) in categories" :key="category.id"
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <td class="p-4 w-4">
-              <div class="flex items-center">
-                <input id="checkbox-table-search-1" type="checkbox" v-model="selected" :value="category"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+        </div>
+      </div>
+      <!--  -->
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4 justify-items-center" v-else>
+      <div v-if="!users.length"
+        class="col-span-full inline-flex w-full items-center justify-center shadow-xl rounded-xl border border-gray-100">
+        <span colspan="1000" class="p-4 text-center text-sm text-gray-500">
+          Không có dữ liệu
+        </span>
+      </div>
+      <!-- Items -->
+      <div v-for="(user) in users" :key="user.id"
+        class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex justify-end px-4 pt-4">
+          <VDropdown :distance="6" :popperTriggers="['click']">
+
+            <button id="dropdownButton" data-dropdown-toggle="dropdown"
+              class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+              type="button">
+              <span class="sr-only">Open dropdown</span>
+              <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
+                </path>
+              </svg>
+            </button>
+
+            <template #popper>
+              <div id="dropdown"
+                class="z-10 text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
+                <ul class="py-1" aria-labelledby="dropdownButton">
+                  <li>
+                    <span
+                      class="cursor-not-allowed block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Khóa
+                      tài khoản</span>
+                  </li>
+                </ul>
               </div>
-            </td>
-            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white cursor-pointer"
-              @click="$router.push({ path: '/content/category/' + category.id })">
-              {{ category.name }}
-            </th>
-            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/category/' + category.id })">
-              <span v-once> {{ category.desc ?? '&lt;trống&gt;' }}</span>
-            </td>
-            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/category/' + category.id })">
-              {{ $dayjs(category.updated_at).format("llll") }}
-            </td>
-            <td class="py-4 px-6 cursor-pointer" @click="$router.push({ path: '/content/category/' + category.id })">
-              {{ $dayjs(category.created_at).format("llll") }}
-            </td>
-            <td class="py-4 px-6">
-              <Link :href="`${baseUrlShop}/${category.slug}`" color="blue" :text="`${baseUrlShop}/${category.slug}`" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </template>
+          </VDropdown>
+
+        </div>
+        <div class="flex flex-col items-center pb-10">
+          <div class="relative">
+            <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
+              :src="`https://ui-avatars.com/api/?name=${user.name}&background=random&size=128&length=1`"
+              alt="Bonnie image" />
+            <span v-if="user.block"
+              class=" absolute top-0 right-0 bg-blue-100 text-blue-800 text-sm font-semibold inline-flex items-center p-1.5 rounded-full dark:bg-blue-200 dark:text-blue-800">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5">
+                <path fill-rule="evenodd"
+                  d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+                  clip-rule="evenodd" />
+              </svg>
+            </span>
+          </div>
+
+          <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ user.name }} <span
+              @click.prevent="rename(user)" v-if="user.username !== 'sa'"
+              class="cursor-pointer bg-gray-100 text-gray-800 text-sm font-semibold inline-flex items-center p-1.5 rounded-full dark:bg-gray-200 dark:text-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5">
+                <path
+                  d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
+                <path
+                  d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
+              </svg>
+            </span></h5>
+
+          <span class="text-sm text-gray-500 dark:text-gray-400">{{ user.email ?? '~' }}</span>
+
+        </div>
+      </div>
+      <!--  -->
     </div>
 
     <nav class="flex justify-between items-center pt-4" aria-label="Table navigation">
@@ -182,22 +173,28 @@
 
 <script>
 export default {
-  name: 'ContentCategory',
+  name: 'AccountUser',
   transition: {
     enterActiveClass: 'animate-fadeIn',
   },
   data: function () {
     return {
       pagination: {},
-      categories: [],
+      users: [],
       baseUrlShop: '',
-      selected: [],
       state: {
         confirm: false,
         success: false,
       },
       fetchUrl: '',
       search: '',
+      confirmation: {
+        user_id: null,
+        type: null,
+        value: null,
+        state: null,
+        messages: [],
+      },
     }
   },
   watch: {
@@ -210,23 +207,16 @@ export default {
       this.debounceSearching()
     }
   },
-  created () {
-    this.debounceSearching = this.$_.debounce( function () {
+  created() {
+    this.debounceSearching = this.$_.debounce(function () {
       this.searching();
-    },500)
+    }, 500)
   },
   async fetch() {
-    this.fetchUrl = '/content/categories'
+    this.fetchUrl = '/account/users'
     this.baseUrlShop = process.env.baseUrlShop
+
   },
-  // async asyncData({ $axios, env }) {
-  //   const categories = await $axios.get('/content/categories')
-  //   return {
-  //     pagination = categories.data,
-  //     categories: categories.data.data,
-  //     baseUrlShop: env.baseUrlShop,
-  //   }
-  // },
   methods: {
     searching() {
       if (this.search.length)
@@ -239,36 +229,40 @@ export default {
     },
     async fetching(url, params = {}) {
       try {
-        const categories = await this.$axios.get(url, { params })
-        this.pagination = categories.data
-        this.categories = this.pagination.data;
+        const users = await this.$axios.get(url, { params })
+        this.pagination = users.data
+        this.users = this.pagination.data;
       }
       catch (e) { }
     },
-    async del(callback) {
-      let removed = [];
+    async confirmed(callback) {
       try {
-        for (const [i, category] of this.selected.entries()) {
-          await this.$axios.delete('/content/categories/' + category.id)
-          this.$toast.global.success({
-            message: `Đã xóa ${category.name}`
-          })
-          this.categories.splice(this.categories.findIndex(c => c.id === category.id), 1)
-          removed.push(i)
+        switch (this.confirmation.type) {
+          case 'block':
+            await this.$axios.patch('/account/users/' + this.confirmation.user_id, {
+              block: this.confirmation.value,
+            })
+            this.$toast.global.success({
+              message: `${this.confirmation.messages[0]} thành công`
+            })
+            this.fetching(this.fetchUrl)
+            break;
 
-          if (this.categories.length == 0 && this.pagination.prev_page_url != null) {
-            this.paginate(this.pagination.prev_page_url)
-          }
+          default:
+            break;
+        }
+      } catch (e) {
+        console.log(e)
+      }
+      finally {
+        this.confirmation = {
+          user_id: null,
+          type: null,
+          value: null,
+          state: null,
+          messages: [],
         }
         callback()
-        this.state.success = true
-      } catch (e) {
-        callback()
-      } finally {
-        removed.forEach((i) => {
-          this.selected.splice(i, 1)
-        })
-
       }
     }
   },
@@ -276,31 +270,6 @@ export default {
     isRequestLoading() {
       return this.$store.state.loading.isRequestLoading
     },
-    selectedListConfirm() {
-      let list = [];
-      this.selected.forEach(function (category) {
-        list.push(`${category.name} (${category.slug})`)
-      })
-
-      return list
-    },
-    selectAll: {
-      get: function () {
-        if (this.$fetchState.pending) return false;
-        return this.categories ? this.selected.length == this.categories.length : false;
-      },
-      set: function (value) {
-        var selected = [];
-
-        if (value) {
-          this.categories.forEach(function (category) {
-            selected.push(category);
-          });
-        }
-
-        this.selected = selected;
-      }
-    }
   }
 
 }

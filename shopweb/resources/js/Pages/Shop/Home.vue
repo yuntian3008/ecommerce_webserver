@@ -8,12 +8,14 @@ import ProductCard from '@/Components/App/ProductCard.vue';
 import HoverableProductCard from '@/Components/App/HoverableProductCard.vue';
 
 
-defineProps({
-    carouselImages: Array,
+const props = defineProps({
+    products: Array,
     homeHeaderSvg: String,
 })
 
 const carouselData = ref();
+
+console.log(props.products)
 
 </script>
 
@@ -37,10 +39,10 @@ const carouselData = ref();
             </div>
         </template>
 
-        <template v-slot="scope">
+        <template v-slot="{ addToCart }">
             <div class="container mx-auto mb-8">
                 <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-16">
-                    <HoverableProductCard @addToCart="scope.addToCart" :slug="route('product')" name="Simple Machine" price="$40" v-for="n in 8" :key="n" :id="n" :image="'http://localhost:8000/dev_assets/cm' + n + '.webp'"/>
+                    <HoverableProductCard v-for="product in products.data" :key="product.id" :id="product.id"  @addToCart="addToCart" :slug="route('product', { 'product': product.slug})" :name="product.name" :price="product.unit_price" :image="product.image.url"/>
                 </div>
             </div>
         </template>

@@ -43,7 +43,7 @@ class StoreProductRequest extends FormRequest
             'category_id' => [$isRequiredCategory,'exists:categories,id'],
             'name' => ['required', 'string', 'max:168'],
             'slug' => ['required', 'unique:products'],
-            'desc' => ['required', 'string', 'max:254'],
+            'desc' => ['required', 'string', 'max:5120'],
             'specs' => ['required', 'json'],
             'unit_price' => ['required','numeric','min:0']
         ];
