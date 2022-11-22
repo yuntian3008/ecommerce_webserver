@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAdministratorScopeRequest;
 use App\Models\Administrator;
 use App\Models\AdministratorScope;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Laravel\Passport\Passport;
 
@@ -19,7 +21,8 @@ class AdministratorScopeController extends Controller
      */
     public function index(Administrator $administrator)
     {
-        //
+        $scopes = $administrator->administratorScopes;
+        return response()->json($scopes, Response::HTTP_OK);
     }
 
     /**
@@ -29,28 +32,15 @@ class AdministratorScopeController extends Controller
      * @param  \App\Models\Administrator  $administrator
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Administrator $administrator)
+    public function store(StoreAdministratorScopeRequest $request, Administrator $administrator)
     {
-        $request->validate([
-            'scopes' => [
-                'required',
-                'array'
-            ],
-            'scopes.*' => [
-                Rule::in(Passport::scopeIds())
-            ]
-        ]);
-        $scopes = $request->scopes;
 
-        foreach ($scopes as $value) {
-            $inserts[] = ['scope' => $value ];
-        }
-        $r =  $administrator->administratorScopes()->createMany($inserts);
+        $scope = $administrator->administratorScopes()->create($request->validated());
 
         foreach($administrator->tokens as $token)
                 $token->revoke();
 
-        return $r;
+        return $scope;
     }
 
     /**
@@ -62,7 +52,7 @@ class AdministratorScopeController extends Controller
      */
     public function show(Administrator $administrator, AdministratorScope $administratorScope)
     {
-        //
+        return response()->json($administratorScope, Response::HTTP_OK);
     }
 
     /**
@@ -85,8 +75,11 @@ class AdministratorScopeController extends Controller
      * @param  \App\Models\AdministratorScope  $administratorScope
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Administrator $administrator, AdministratorScope $administratorScope)
+    public function destroy(AdministratorScope $administratorScope)
     {
-        $administrator->administratorScopes()->delete();
+        $administrator = $administratorScope->administrator;
+        $administratorScope->delete();
+        foreach($administrator->tokens as $token)
+                $token->revoke();
     }
 }

@@ -41,7 +41,8 @@ export default {
     "flag-icons/css/flag-icons.min.css",
     'floating-vue/dist/style.css',
     'vue-advanced-cropper/dist/style.css',
-    'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
+    'vue-cool-lightbox/dist/vue-cool-lightbox.min.css',
+    'sweetalert2/dist/sweetalert2.min.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -52,7 +53,9 @@ export default {
     { src: "@/plugins/lodash", ssr: false },
     { src: "@/plugins/floatingvue", ssr: false },
     { src: "@/plugins/vue-advanced-cropper", ssr: false },
-    { src: "@/plugins/vue-cool-lightbox", ssr: false }
+    { src: "@/plugins/vue-cool-lightbox", ssr: false },
+    { src: "@/plugins/sweetalert", ssr: false },
+    { src: "@/plugins/vue-final-modal", ssr: false }
 
   ],
 
@@ -212,5 +215,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ['vue-final-modal']
   }
 }

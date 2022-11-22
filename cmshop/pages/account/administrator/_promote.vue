@@ -1,26 +1,26 @@
 <template>
   <div class="container mx-auto px-4 lg:px-0">
-    <Modal :show="state.success" :type="'success'" title="Thành công" @close="$router.push('/content/category')"
-      @action="$router.push('/content/category')" />
-    <ConfirmModal :loadingState="true" :show="state.confirm" question="Bạn có chắc muốn xóa danh mục này?"
+    <Modal :show="state.success" :type="'success'" title="Thành công" @close="$router.push('/account/administrator')"
+      @action="$router.push('/account/administrator')" />
+    <ConfirmModal :loadingState="true" :show="state.confirm" question="Bạn có chắc muốn xóa quản trị viên này?"
       @close="state.confirm = false" @action="del" />
 
-    <h1 class="text-4xl font-extrabold dark:text-white  mb-8">Danh mục</h1>
+    <h1 class="text-4xl font-extrabold dark:text-white  mb-8">Quản trị viên</h1>
     <section class="bg-white dark:bg-gray-900">
       <div class="max-w-2xl px-4 mx-auto py-8">
-        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Cập nhật danh mục</h2>
+        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Cập nhật quản trị viên</h2>
         <form action="#">
           <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
             <div class="sm:col-span-2">
-              <FormInput label="Tên danh mục" :placeholder="category.name" v-model="category.name" />
+              <FormInput label="Tên quản trị viên" :placeholder="administrator.name" v-model="administrator.name" />
             </div>
             <div class="sm:col-span-2">
-              <FormInput label="Mô tả" :placeholder="category.desc ?? '<trống>'" :textarea="true"
-                v-model="category.desc" />
+              <FormInput label="Mô tả" :placeholder="administrator.desc ?? '<trống>'" :textarea="true"
+                v-model="administrator.desc" />
             </div>
           </div>
           <div class="flex justify-between items-center">
-            <SuperButton text="Trở về" to="/content/category" color="blue">
+            <SuperButton text="Trở về" to="/account/administrator" color="blue">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                 <path fill-rule="evenodd"
                   d="M7.793 2.232a.75.75 0 01-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 010 10.75H10.75a.75.75 0 010-1.5h2.875a3.875 3.875 0 000-7.75H3.622l4.146 3.957a.75.75 0 01-1.036 1.085l-5.5-5.25a.75.75 0 010-1.085l5.5-5.25a.75.75 0 011.06.025z"
@@ -61,21 +61,21 @@ export default {
     }
   },
   async asyncData({ params, $axios }) {
-    const category = await $axios.get('/content/categories/' + params.update)
-    return { category: category.data }
+    const administrator = await $axios.get('/account/administrators/' + params.update)
+    return { administrator: administrator.data }
   },
   methods: {
     async submit() {
       let app = this;
       try {
-        const result = await this.$axios.patch('/content/categories/' + this.category.id, this.category)
+        const result = await this.$axios.patch('/account/administrators/' + this.administrator.id, this.administrator)
         this.state.success = true
       } catch (e) { }
 
     },
     async del(callback) {
       try {
-        const result = await this.$axios.delete('/content/categories/' + this.category.id)
+        const result = await this.$axios.delete('/account/administrators/' + this.administrator.id)
         callback()
         this.state.success = true
       } catch (e) { }

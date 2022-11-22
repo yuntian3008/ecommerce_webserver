@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Laravel\Passport\Passport;
 
-
-class CatergoryController extends Controller
+class ScopeController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['auth:api']);
+        $this->middleware(['scope:read-scopes,*'])->only(['index']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,10 +19,7 @@ class CatergoryController extends Controller
      */
     public function index()
     {
-        //
-        $category = Category::all();
-        return response()->json($category, Response::HTTP_OK);
-
+        return Passport::scopes();
     }
 
     /**
@@ -32,50 +31,39 @@ class CatergoryController extends Controller
     public function store(Request $request)
     {
         //
-        $category = Category::create($request->all());
-        return response()->json($category, Response::HTTP_OK);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
         //
-        return response()->json($category, Response::HTTP_OK);
-
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         //
-
-        $category->update($request->all());
-         return response()->json($category, Response::HTTP_OK);
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
         //
-        $category->delete();
-        return response()->json($category, Response::HTTP_OK);
-
     }
 }

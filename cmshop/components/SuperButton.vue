@@ -36,6 +36,10 @@ export default {
       type: String,
       required: false,
     },
+    size: {
+      type: String,
+      required: false,
+    },
     text: String,
     to: String,
     href: String,
@@ -43,6 +47,7 @@ export default {
   computed: {
     classes: function () {
       let theme = ''
+      let size = ''
       switch (this.color) {
         case 'slate':
           theme = `bg-slate-700 hover:bg-slate-800 focus:ring-slate-500 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800`
@@ -114,7 +119,24 @@ export default {
           theme = `bg-primary-700 hover:bg-primary-800 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`
           break;
       }
-      return `${theme} inline-flex item-centers text-white gap-x-2 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-3 py-2.5 text-center`;
+      switch (this.size) {
+        case 'extra-small':
+          size = `text-xs px-3 py-2`
+          break;
+        case 'small':
+          size = `text-sm px-3 py-2`
+          break;
+        case 'extra-large':
+          size = `text-base px-6 py-3.5`
+          break;
+        case 'large':
+          size = `py-3 px-5 text-base`
+          break;
+        default:
+          size = `text-sm px-5 py-2.5`
+          break;
+      }
+      return `${theme} inline-flex item-centers text-white gap-x-2 focus:ring-4 focus:outline-none font-medium rounded-lg text-center ${size}`;
     }
   },
 }

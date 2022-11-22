@@ -1,5 +1,5 @@
 <template>
-  <transition enter-active-class="animate-bounceInLeft animate-duration-600" leave-active-class="animate-bounceOutLeft animate-duration-600">
+  <transition enter-active-class="animate-slideInLeft animate-duration-200" leave-active-class="animate-bounceOutLeft animate-duration-300">
       <aside v-click-outside="clickOut" v-if="toggle"  class="fixed top-0 left-0 w-64 h-full z-10">
       <div
         class="overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -125,12 +125,8 @@
             </button>
             <ul ref="dropdownAuthentication" class="hidden py-2 space-y-2">
               <li>
-                <a href="#"
-                  class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Quản trị viên</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Phân quyền</a>
+                <NuxtLink to="/account/administrator" @click.native="clickOut"
+                  class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Quản trị viên</NuxtLink>
               </li>
               <li>
                 <a href="#"

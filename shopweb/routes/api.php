@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AdministratorController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\AdministratorScopeController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CategoryProductController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\ProductImageController;
+use App\Http\Controllers\Api\V1\ScopeController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -54,17 +56,22 @@ Route::prefix('/content')->group(function () {
     Route::apiResource('products.product-images', ProductImageController::class)->shallow()->only(['index','store','destroy']);
 });
 
+Route::prefix('/account')->group(function () {
+    Route::apiResource('administrators.administrator-scopes',AdministratorScopeController::class)->shallow()->only(['index','store','destroy']);
+    Route::apiResource('administrators', AdministratorController::class);
+    Route::apiResource('scopes', ScopeController::class)->only(['index']);
+
+});
+
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [AuthController::class,'login']);
     Route::get('/user', [AuthController::class,'user']);
     Route::post('/logout',[AuthController::class,'logout']);
 
 
+
     Route::get('/scope-test', function() {
     });
-    Route::apiResources([
-        'administrators.scopes' => AdministratorScopeController::class,
-    ]);
 
 
 });
