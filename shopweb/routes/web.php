@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -30,82 +34,13 @@ Route::get('/product/{product:slug}', function (Product $product) {
     ]);
 })->name('product');
 
-Route::get('/cart-with-product', function (Request $request)
-{
-    $cart = $request->ids;
+Route::get('/category/{category:slug}', [HomeController::class, 'category'])->name('category');
 
-    $productImages = [
-        [
-            'priority' => 0,
-            'url' => fake()->imageUrl(640, 480, 'products', true)
-        ],
-        [
-            'priority' => null,
-            'url' => fake()->imageUrl(640, 480, 'products', true)
-        ],
-        [
-            'priority' => null,
-            'url' => fake()->imageUrl(640, 480, 'products', true)
-        ],
-        [
-            'priority' => null,
-            'url' => fake()->imageUrl(640, 480, 'products', true)
-        ],
-    ];
+Route::get('/search', [HomeController::class,'search'])->name('search');
 
-    $data = [];
+Route::get('/cart',[ CartController::class, 'index'])->name('cart');
 
-    foreach ($cart as $i => $value) {
-        $data[$i]["id"] = $value;
-        $data[$i]["name"] = fake()->sentence();
-        $data[$i]["desc"] = fake()->paragraph();
-        $data[$i]["slug"] =Str::of($data[$i]["name"])->slug('-');
-        $data[$i]["specs"] = "[]";
-        $data[$i]["unit_price"] = fake()->numberBetween(1000,100000);
-        $data[$i]["product_images"] = $productImages;
-    }
 
-    return $data;
-})->name('cart-with-product');
-
-Route::get('/cart', function (Request $request) {
-    // $request->session()->flash('flash.dangerBanner', 'Yay it works!');
-    return Inertia::render('Shop/Cart',[
-        // 'fullCartItems' => Inertia::lazy(function () {
-        //     $cart = request('cart');
-
-        //     $productImages = [
-        //         [
-        //             'priority' => 0,
-        //             'url' => fake()->imageUrl(640, 480, 'products', true)
-        //         ],
-        //         [
-        //             'priority' => null,
-        //             'url' => fake()->imageUrl(640, 480, 'products', true)
-        //         ],
-        //         [
-        //             'priority' => null,
-        //             'url' => fake()->imageUrl(640, 480, 'products', true)
-        //         ],
-        //         [
-        //             'priority' => null,
-        //             'url' => fake()->imageUrl(640, 480, 'products', true)
-        //         ],
-        //     ];
-
-        //     foreach ($cart as $i => $value) {
-        //         $cart[$i]["name"] = fake()->sentence();
-        //         $cart[$i]["desc"] = fake()->paragraph();
-        //         $cart[$i]["slug"] =Str::of($cart[$i]["name"])->slug('-');
-        //         $cart[$i]["specs"] = "[]";
-        //         $cart[$i]["unit_price"] = fake()->numberBetween(1000000,100000000);
-        //         $cart[$i]["product_images"] = $productImages;
-        //     }
-
-        //     return $cart;
-        // }),
-    ]);
-})->name('cart');
 
 
 
@@ -114,9 +49,16 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return Inertia::render('Dashboard');
-    // })->name('dashboard');
+    Route::get('/checkout', [ CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/address', [ AddressController::class, 'store'])->name('address.store');
+
+    Route::post('/addresses/{address}/orders',[ OrderController::class, 'store'])->name('order.store');
+
+    Route::get('/orders/{order}', [ OrderController::class, 'show'])->name('order.show');
+    Route::get('/orders', [ OrderController::class, 'index'])->name('order.index');
+
+
+
 });
 
 

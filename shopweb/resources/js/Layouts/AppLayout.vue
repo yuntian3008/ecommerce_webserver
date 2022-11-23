@@ -12,13 +12,14 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import CartMenu from '@/Components/App/CartMenu.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 defineProps({
     title: String,
 });
 
 const scrolling = ref()
 const showingNavigationDropdown = ref(false);
-const cartRef = ref()
+// const cartRef = ref()
 
 const switchToTeam = (team) => {
     Inertia.put(route('current-team.update'), {
@@ -28,6 +29,12 @@ const switchToTeam = (team) => {
     });
 };
 
+const searching = (e) => {
+    Inertia.get(route('search', {
+        s: e.target.value
+    }))
+}
+
 const logout = () => {
     Inertia.post(route('logout'));
 };
@@ -36,13 +43,13 @@ function isTouchDevice() {
     return window.ontouchstart !== undefined;
 }
 
-const addToCart = (id) => {
-    cartRef.value.addToCart(id);
-}
+// const addToCart = (id) => {
+//     cartRef.value.addToCart(id);
+// }
 
-const syncCart = () => {
-    cartRef.value.syncCart();
-}
+// const syncCart = () => {
+//     cartRef.value.syncCart();
+// }
 
 
 
@@ -54,46 +61,141 @@ const syncCart = () => {
         <Head :title="title" />
 
         <Banner />
-        <div class="container mx-auto z-20 fixed top-0 right-0 left-0">
+        <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+            <div class="container flex flex-wrap gap-x-4 items-center justify-between mx-auto">
+                <Link :href="route('home')" class="flex items-center">
+                <ApplicationLogo :width="6" :height="6" />
+                <span class="ml-3 self-center text-xl font-semibold whitespace-nowrap dark:text-white">Meo Meo
+                    Shop</span>
+                </Link>
+
+                <div class="ml-8 grow flex items-center justify-start gap-x-6 relative">
+                    <Link :href="route('home')"
+                        class="inline-flex items-center font-semibold gap-x-1 text-gray-700 dark:text-blue-500 hover:text-yellow-500">
+                    Trang
+                    chủ</Link>
+                    <Menu>
+                        <MenuButton href="#"
+                            class="inline-flex items-center font-semibold gap-x-1 text-gray-700 dark:text-blue-500 hover:text-yellow-500">
+                            Danh
+                            mục
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </MenuButton>
+                        <MenuItems as="div"
+                            class="z-20 scrollbar-thin scrollbar-thumb-yellow-700 scrollbar-track-gray-300 scrollbar-thumb-rounded-full scrollbar-track-rounded-full border border-gray-200 rounded-lg bg-white absolute top-10 inset-x-auto mt-2 origin-top-right overflow-y-scroll w-full h-32 max-w-xl">
+                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+                                <li v-for="(category, i) in $page.props.categories" :key="i">
+                                    <MenuItem>
+                                    <Link :href="category.url"
+                                        class="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    {{ category.name }}</Link>
+                                    </MenuItem>
+                                </li>
+
+                            </ul>
+                        </MenuItems>
+                    </Menu>
+
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Search icon</span>
+                    </div>
+                    <input type="text" id="search-navbar" @keyup.enter="searching"
+                        class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-yellow-500 focus:border-yellow-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500"
+                        placeholder="Search...">
+                </div>
+                <CartMenu ref="cartRef" />
+                <div class="flex items-center" v-if="$page.props.user">
+                    <Dropdown align="right" width="48">
+                        <template #trigger>
+                            <button v-if="$page.props.jetstream.managesProfilePhotos"
+                                class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.user.profile_photo_url"
+                                    :alt="$page.props.user.name">
+                            </button>
+
+                            <span v-else class="inline-flex rounded-md">
+                                <button type="button"
+                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                    {{ $page.props.user.name }}
+
+                                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </span>
+                        </template>
+
+                        <template #content>
+                            <!-- Account Management -->
+
+
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                Đơn hàng
+                            </div>
+
+                            <DropdownLink :href="route('order.index')">
+                                Lịch sử đơn hàng
+                            </DropdownLink>
+
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                Quản lí tài khoản
+                            </div>
+
+                            <DropdownLink :href="route('profile.show')">
+                                Hồ sơ của bạn
+                            </DropdownLink>
+
+                            <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
+                                API Tokens
+                            </DropdownLink>
+
+                            <div class="border-t border-gray-100" />
+
+                            <!-- Authentication -->
+                            <form @submit.prevent="logout">
+                                <DropdownLink as="button">
+                                    Đăng xuất
+                                </DropdownLink>
+                            </form>
+                        </template>
+                    </Dropdown>
+                </div>
+                <div class="flex items-center gap-x-2" v-else>
+                    <Link :href="route('login')"
+                        class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
+                    Đăng
+                    nhập</Link>
+                    <Link v-if="$page.props.canRegister" :href="route('register')"
+                        class="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
+                    Đăng
+                    kí</Link>
+                </div>
+
+            </div>
+        </nav>
+        <!-- <div class="container mx-auto z-20 fixed top-0 right-0 left-0">
             <div class="navbar bg-base-100 rounded-box my-2 bg-opacity-75">
                 <div class="flex-1">
                     <Link :href="route('home')" class="px-2">
-                    <!-- {{ $page.props.appName }} -->
-                        <ApplicationLogo :width="16" :height="16"/>
+
                     </Link>
-                    <!-- <ul class="menu menu-compact menu-horizontal gap-x-2 p-2">
-                        <MenuItemLink :href="route('home')" :active="route().current('home')">
-                            Trang chủ
-                        </MenuItemLink>
-                        <li tabindex="0">
-                            <a>
-                                Parent
-                                <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    viewBox="0 0 24 24">
-                                    <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                                </svg>
-                            </a>
-                            <ul class="p-2 bg-base-100">
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a>Item 3</a></li>
-                    </ul> -->
                 </div>
                 <div class="flex-none gap-2">
-                    <!-- <div class="form-control">
-                        <div class="input-group">
-                            <input type="text" placeholder="Search…" class="input input-bordered" />
-                            <button class="btn btn-square btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div> -->
+
                     <CartMenu ref="cartRef" />
                     <div v-if="$page.props.user" class="dropdown dropdown-end">
                         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
@@ -109,7 +211,7 @@ const syncCart = () => {
                             <MenuItemLink :href="route('profile.show')">
                                 Cài đặt tài khoản
                             </MenuItemLink>
-                            <!-- Authentication -->
+
                             <form @submit.prevent="logout">
                                 <MenuItemLink isButton="true">
                                     Đăng xuất
@@ -124,18 +226,17 @@ const syncCart = () => {
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
         <!-- Page Heading -->
-        <div class="container mx-auto z-0 pt-32">
-            <slot name="header" />
-        </div>
+
+        <slot name="header" />
 
 
         <!-- Page Content -->
-        <main class="z-10">
-            <slot :addToCart="addToCart" :cartRef="cartRef" />
+        <main class="z-10 mt-12">
+            <slot></slot>
         </main>
 
         <footer class="footer p-10 bg-base-100 rounded-box text-neutral-content">

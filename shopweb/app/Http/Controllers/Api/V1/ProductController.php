@@ -16,8 +16,8 @@ use Illuminate\Validation\Rule;
 class ProductController extends Controller
 {
     public function __construct() {
-        $this->middleware(['auth:api']);
-        $this->middleware(['scope:read-products,*'])->only(['index','show']);
+        $this->middleware(['auth:api'])->except(['show']);
+        $this->middleware(['scope:read-products,*'])->only(['index']);
         $this->middleware(['scope:create-products,*'])->only('store');
         $this->middleware(['scope:update-products,*'])->only('update');
         $this->middleware(['scope:delete-products,*'])->only('destroy');

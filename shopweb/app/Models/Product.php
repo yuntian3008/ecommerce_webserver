@@ -30,7 +30,7 @@ class Product extends Model
 
     public function getUrlAttribute()
     {
-        return url();
+        return route('product',['product' => $this->slug]);
     }
 
     public function category()
@@ -41,6 +41,11 @@ class Product extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_items');
     }
 
     public function productImages()

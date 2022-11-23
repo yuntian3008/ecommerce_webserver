@@ -75,7 +75,6 @@
           <div class="w-24 h-24 mb-3 rounded-full shadow-lg bg-gray-300 animate-twPulse animate-infinite"></div>
           <h5 class="mb-1 text-xl font-medium bg-gray-300 animate-twPulse animate-infinite w-24 h-7 rounded-lg"></h5>
           <span class="text-sm bg-gray-300 animate-twPulse animate-infinite w-20 h-5 rounded-lg"></span>
-
         </div>
       </div>
       <!--  -->

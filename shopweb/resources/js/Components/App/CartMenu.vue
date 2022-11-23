@@ -1,76 +1,28 @@
 <script setup>
 import { Link } from '@inertiajs/inertia-vue3';
 import { computed, ref } from '@vue/reactivity';
-import { onMounted } from '@vue/runtime-core';
-import { useToast } from "vue-toastification";
-const cartItems = ref([])
+import { useStore } from 'vuex';
 
-const toast = useToast();
+const store = useStore()
 
-onMounted(() => {
-    if (localStorage.cart)
-        cartItems.value = JSON.parse(localStorage.cart);
-
-    console.log(cartItems.value)
-})
-
-const upsertCart = (item) => {
-
-    const index = cartItems.value.findIndex((e) => e.id === item.id);
-
-    if (index === -1) {
-        if (!item.quantity)
-            item.quantity = 1;
-            cartItems.value.push(item);
-    } else {
-        if (item.quantity)
-            cartItems.value[index] = item;
-        else
-            cartItems.value[index].quantity++;
-    }
-
-    localStorage.cart = JSON.stringify(cartItems.value)
-}
-
-const addToCart = (product_id) => {
-    upsertCart({
-        id: product_id
-    })
-    toast.success("Thêm vào giỏ hàng thành công", { timeout: 1500 })
-}
-
-const syncCart = () => {
-    if (localStorage.cart)
-        cartItems.value = JSON.parse(localStorage.cart);
-}
-
-
-defineExpose({
-    addToCart,
-    syncCart
-})
 
 </script>
 
 <template>
-    <div class="dropdown dropdown-end">
-        <label tabindex="0" class="btn btn-ghost btn-circle">
-            <div class="indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <span class="badge badge-secondary badge-sm indicator-item">{{ cartItems.length }}</span>
-            </div>
-        </label>
-        <div tabindex="0" class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
-            <div class="card-body">
-                <span class="font-bold text-lg">Có {{ cartItems.length }} sản phẩm</span>
-                <div class="card-actions">
-                    <Link class="btn btn-primary btn-block" :href="route('cart')">Xem giỏ hàng</Link>
-                </div>
-            </div>
-        </div>
+    <div>
+        <Link :href="route('cart')"
+            class=" relative inline-flex text-gray-800  hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm p-2.5 text-center">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+            </svg>
+        </span>
+        <span
+            class=" absolute -right-1 -top-1 inline-flex items-center justify-center text-xs p-1 w-5 h-5 font-semibold text-blue-800 bg-blue-100 rounded-full dark:bg-blue-200 dark:text-blue-800">
+            {{ store.getters['cart/cartLength'] }}
+        </span>
+        </Link>
     </div>
 </template>

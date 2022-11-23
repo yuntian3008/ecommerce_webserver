@@ -16,8 +16,17 @@ class Category extends Model
         'name', 'desc', 'slug'
     ];
 
+    protected $appends = [
+        'url'
+    ];
+
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function getUrlAttribute()
+    {
+        return route('category',['category' => $this->slug]);
     }
 }

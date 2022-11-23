@@ -10,6 +10,11 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
+// import 'sweetalert2/dist/sweetalert2.min.css'
+
+// Vuex
+import store from './Store';
+
 const options = {
     toast: {
         //
@@ -23,6 +28,7 @@ createInertiaApp({
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
+            .use(store)
             .use(Toast,options.toast)
             .use(plugin)
             .use(ZiggyVue, Ziggy)

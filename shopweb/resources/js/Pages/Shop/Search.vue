@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { onMounted, reactive, ref, toRef, toRefs } from 'vue';
+import { computed, onMounted, reactive, ref, toRef, toRefs } from 'vue';
 import VueCarouselImageItem from '@/Components/VueCarousel/VueCarouselImageItem.vue';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
@@ -15,8 +15,11 @@ import { useToast } from 'vue-toastification';
 
 const props = defineProps({
     products: Array,
+    params: Object,
     homeHeaderSvg: String,
 })
+
+const params = ref(props.params)
 
 const data = reactive({
     products: props.products.data,
@@ -34,6 +37,11 @@ const addToCart = (id) => store.dispatch('cart/addToCart', {
             toast.success("Thêm vào giỏ hàng thành công", { timeout: 1500 })
     }
 })
+
+const searching = () => {
+    Inertia.get(route('search', params.value))
+}
+
 
 const loadMoreIntersect = ref(null);
 
@@ -76,32 +84,41 @@ onMounted(() => {
     <AppLayout title="Khám phá">
         <!-- HEADER -->
         <template #header>
-            <div class="container mx-auto z-0 pt-32">
-                <div class="flex gap-8 items-stretch z-0">
-                    <div class="basis-2/5 flex flex-col justify-center gap-4">
-                        <span class="text-7xl font-bold font-sans">
-                            Một trong tất cả các giải pháp về thiết bị, công cụ pha chế
-                        </span>
-                        <span class="text-gray-700 text-lg">
-                            Bạn chỉ cần ở đây và tìm kiếm, chọn lựa theo sở thích của bạn. Máy pha Espresso hiện đại,
-                            dụng
-                            cụ pha chế, những ly Latte tuyệt đẹp qua sự chọn lựa tuyệt vời của bạn. Xây dựng ngay giấc
-                            mơ
-                            của một Barista chuyên nghiệp.
-                        </span>
-                    </div>
-                    <div class="basis-3/5 relative">
-                        <img class="w-full -mt-20  z-0" :src="homeHeaderSvg" alt="" />
-                        <HeaderProductCard class="absolute right-32 top-32 shadow-none" size="large"
-                            :imgAspectRatio="'4/3'" name="Simple Machine" price="$40"
-                            image="http://localhost:8000/dev_assets/cm1.webp" />
-                    </div>
-                </div>
-            </div>
 
         </template>
 
         <div class="container mx-auto mb-8">
+            <h2 class="text-4xl font-extrabold dark:text-white mb-4">Tìm kiếm sản phẩm</h2>
+            <div class="inline-flex flex-row gap-x-8 my-4">
+                <div class="inline-flex items-center">
+                    <div>
+                        <label for="small-input"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Từ khóa</label>
+                        <input type="text" placeholder="Search" v-model="params.s"
+                            class=" inline-block w-full max-w-sm p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm focus:ring-yellow-500 focus:border-yellow-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500" />
+                    </div>
+                </div>
+
+                <div class="inline-flex items-end gap-x-2">
+                    <div>
+                        <label for="small-input"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Từ</label>
+                        <input type="number" placeholder="Từ" v-model="params.pf"
+                            class=" inline-block w-full max-w-sm p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm focus:ring-yellow-500 focus:border-yellow-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500" />
+                    </div>
+                    <span class="mb-2"> - </span>
+                    <div>
+                        <label for="small-input"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Đến</label>
+                        <input type="number" placeholder="Đến" v-model="params.pt"
+                            class=" inline-block w-full max-w-sm p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm focus:ring-yellow-500 focus:border-yellow-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500" />
+                    </div>
+                    <button @click.prevent="searching" type="button" class="ml-4 block py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Lọc</button>
+                </div>
+
+
+
+            </div>
             <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-16">
                 <ProductCard v-for="product in data.products" :key="product.id" :product="product"
                     @addToCart="addToCart" />

@@ -1,117 +1,71 @@
+<template>
+    <a :href="props.product.url" class="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <img class="p-8 rounded-t-lg" :src="props.product.image.url" alt="product image" />
+        <div class="px-5 pb-5">
+
+            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ props.product.name }}</h5>
+
+            <div class="flex items-center mt-2.5 mb-5">
+                <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <title>First star</title>
+                    <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                </svg>
+                <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <title>Second star</title>
+                    <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                </svg>
+                <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <title>Third star</title>
+                    <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                </svg>
+                <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <title>Fourth star</title>
+                    <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                </svg>
+                <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <title>Fifth star</title>
+                    <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                </svg>
+                <span
+                    class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ Intl.NumberFormat('vi-VN', {
+                                                    style: 'currency', currency:
+                                                        'VND'
+                                                }).format(props.product.unit_price) }}</span>
+                <a href="#" @click.prevent="$emit('addToCart',props.product.id)"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+  <path d="M1 1.75A.75.75 0 011.75 1h1.628a1.75 1.75 0 011.734 1.51L5.18 3a65.25 65.25 0 0113.36 1.412.75.75 0 01.58.875 48.645 48.645 0 01-1.618 6.2.75.75 0 01-.712.513H6a2.503 2.503 0 00-2.292 1.5H17.25a.75.75 0 010 1.5H2.76a.75.75 0 01-.748-.807 4.002 4.002 0 012.716-3.486L3.626 2.716a.25.25 0 00-.248-.216H1.75A.75.75 0 011 1.75zM6 17.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15.5 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+</svg>
+</a>
+            </div>
+        </div>
+    </a>
+</template>
+
 <script setup>
-import { computed } from '@vue/reactivity';
-
-
 
 const props = defineProps({
-    size: {
-        type: String,
-        default: 'normal'
-    },
-    imgAspectRatio: {
-        type: String,
-        default: '1/1'
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: String,
-        required: true
-    },
-    image: {
-        type: String,
-        required: true
-    },
-    rating: {
-        type: String,
-        required: true
-    },
-});
+    product: Object,
+})
 
-const classes = computed(() => {
-    let sizeClass;
-    let buttonSize;
-    let iconButtonSize;
-    let titleTextSize;
-    let priceTextSize;
-    let ratingTextSize;
-    let imageAspectRatio;
-
-
-    switch (props.imgAspectRatio) {
-        case '4/3':
-            imageAspectRatio = 'aspect-4/3'
-            break;
-        case '16/9':
-            imageAspectRatio = 'aspect-16/9'
-            break;
-        case '3/2':
-            imageAspectRatio = 'aspect-16/9'
-            break;
-        default:
-            imageAspectRatio = 'aspect-square'
-            break;
-    }
-
-    switch (props.size) {
-        case 'small':
-            sizeClass = 'w-48'
-            buttonSize = 'btn-sm'
-            iconButtonSize = 'w-4 h-4'
-            titleTextSize = 'text-md'
-            priceTextSize = 'text-sm'
-            ratingTextSize = 'text-xs'
-            break;
-        case 'large':
-            sizeClass = 'w-80'
-            buttonSize = 'btn-md'
-            iconButtonSize = 'w-6 h-6'
-            titleTextSize = 'text-2xl'
-            priceTextSize = 'text-lg'
-            ratingTextSize = 'text-md'
-            break;
-
-        default:
-            sizeClass = 'w-60'
-            buttonSize = 'btn-sm'
-            iconButtonSize = 'w-4 h-4'
-            titleTextSize = 'text-md'
-            priceTextSize = 'text-sm'
-            ratingTextSize = 'text-sm'
-            break;
-    }
-    return {
-        card: 'flex flex-col gap-4 bg-white p-4 rounded-box shadow-md ' + sizeClass,
-        button: 'btn btn-square btn-primary ' + buttonSize,
-        iconButton: iconButtonSize,
-        title: 'font-bold ' + titleTextSize,
-        price: 'text-gray-700 ' + priceTextSize,
-        rating: ratingTextSize,
-        image: 'w-full rounded-lg ' + imageAspectRatio,
-    } ;
-});
+defineEmits(['addToCart'])
 
 </script>
 
-<template>
-    <div :class="classes.card">
-        <img :class="classes.image" :src="image" :alt="name"/>
-        <div class="flex justify-between">
-            <div class="flex flex-col">
-                <div :class="classes.title">{{ name }}</div>
-                <div :class="classes.price">{{ price }}</div>
-            </div>
-            <div class="self-center">
-                <button :class="classes.button">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" :class="classes.iconButton">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-</template>

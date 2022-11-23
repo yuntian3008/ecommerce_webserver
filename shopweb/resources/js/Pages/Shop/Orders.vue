@@ -11,29 +11,23 @@ import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
 import { useStore } from 'vuex';
 import { useToast } from 'vue-toastification';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 
 
 const props = defineProps({
-    products: Array,
+    orders: Array,
     homeHeaderSvg: String,
 })
 
 const data = reactive({
-    products: props.products.data,
-    pagination: props.products,
+    orders: props.orders.data,
+    pagination: props.orders,
     loading: false,
 });
 
 const toast = useToast();
 const store = useStore();
 
-const addToCart = (id) => store.dispatch('cart/addToCart', {
-    id: id,
-    callback: (r) => {
-        if (r == 'success')
-            toast.success("Thêm vào giỏ hàng thành công", { timeout: 1500 })
-    }
-})
 
 const loadMoreIntersect = ref(null);
 
@@ -45,7 +39,7 @@ const loadMoreProducts = async () => {
     data.loading = true
     try {
         const result = await axios.get(data.pagination.next_page_url);
-        data.products = [...data.products, ...result.data.data]
+        data.orders = [ ...data.orders , ...result.data.data]
         data.pagination = result.data;
     }
     catch (e) {
@@ -60,7 +54,7 @@ console.log(loadMoreIntersect)
 
 onMounted(() => {
     const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && loadMoreProducts(), {
-        rootMargin: "-150px 0px 0px 0px"
+      rootMargin: "-150px 0px 0px 0px"
     }));
 
     observer.observe(loadMoreIntersect.value)
@@ -76,36 +70,27 @@ onMounted(() => {
     <AppLayout title="Khám phá">
         <!-- HEADER -->
         <template #header>
-            <div class="container mx-auto z-0 pt-32">
-                <div class="flex gap-8 items-stretch z-0">
-                    <div class="basis-2/5 flex flex-col justify-center gap-4">
-                        <span class="text-7xl font-bold font-sans">
-                            Một trong tất cả các giải pháp về thiết bị, công cụ pha chế
-                        </span>
-                        <span class="text-gray-700 text-lg">
-                            Bạn chỉ cần ở đây và tìm kiếm, chọn lựa theo sở thích của bạn. Máy pha Espresso hiện đại,
-                            dụng
-                            cụ pha chế, những ly Latte tuyệt đẹp qua sự chọn lựa tuyệt vời của bạn. Xây dựng ngay giấc
-                            mơ
-                            của một Barista chuyên nghiệp.
-                        </span>
-                    </div>
-                    <div class="basis-3/5 relative">
-                        <img class="w-full -mt-20  z-0" :src="homeHeaderSvg" alt="" />
-                        <HeaderProductCard class="absolute right-32 top-32 shadow-none" size="large"
-                            :imgAspectRatio="'4/3'" name="Simple Machine" price="$40"
-                            image="http://localhost:8000/dev_assets/cm1.webp" />
-                    </div>
-                </div>
-            </div>
-
         </template>
 
         <div class="container mx-auto mb-8">
+            <h2 class="text-4xl font-extrabold dark:text-white mb-4">Lịch sử đơn hàng</h2>
             <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-16">
-                <ProductCard v-for="product in data.products" :key="product.id" :product="product"
-                    @addToCart="addToCart" />
-                <span ref="loadMoreIntersect" />
+                <div v-for="order in data.orders"  :key="order.id" class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                    <a href="#">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Đơn hàng #{{ order.id }}</h5>
+                    </a>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Số sản phẩm: {{ order.orderitems.length }}</p>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Tổng đơn hàng: {{ order.total_amount }}</p>
+                    <span class="mt-4 bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{{ order.state_name }}</span>
+                    <div class="flex justify-end">
+                        <Link :href="route('order.show', order.id )" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Xem chi tiết
+                            <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </Link>
+                    </div>
+
+                </div>
+                <span ref="loadMoreIntersect"/>
                 <div class="col-span-full" v-if="data.loading">
                     <div class="flex justify-center">
                         <div role="status">

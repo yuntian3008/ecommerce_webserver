@@ -1,4 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const color = require('tailwindcss/colors');
+const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,11 +10,15 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+        './node_modules/flowbite/**/*.js'
         // './node_modules/vue3-carousel/dist/*.css',
     ],
 
     theme: {
         extend: {
+            colors: {
+                primary: colors.yellow
+            },
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
@@ -37,7 +43,9 @@ module.exports = {
     plugins: [
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
-        require('daisyui'),
+        require('flowbite/plugin'),
+        require('@headlessui/tailwindcss')({ prefix: 'ui' }),
+        require('tailwind-scrollbar')({ nocompatible: true }),
         require('tailwindcss-animatecss')
     ],
 
