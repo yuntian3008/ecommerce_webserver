@@ -35,6 +35,13 @@ const chooseAddress = (selected) => {
 
 const checkout = () => {
 
+    if (order.address_id == null) {
+        toast.error("Vui lòng thêm hoặc chọn thông tin giao hàng");
+        return
+    }
+
+
+
     let url = route('order.store', order.address_id)
 
     let data = {
