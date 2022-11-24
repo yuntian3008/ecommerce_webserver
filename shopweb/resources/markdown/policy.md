@@ -1,3 +1,3 @@
-# Privacy Policy
+# Chính sách bảo mật
 
-Edit this file to define the privacy policy for your application.
+Đang cập nhật.

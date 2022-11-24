@@ -30,8 +30,12 @@ const getters = {
     }
 }
 const mutations = {
+    SPLICE_CART(state) {
+        state.items = state.items.filter(item => state.selected.findIndex((item2) => item2.id == item.id) == -1);
+    },
     SET_SELECTED(state, payload) {
         state.selected = payload
+
     },
     ADD_CART_ITEMS(state, payload) {
         state.items.push({
@@ -87,15 +91,19 @@ const actions = {
         let i = getters.getIndex(id)
         if (i >= 0) {
             commit('INCREASE_QUANTITY', i)
-        }
-        try {
-            const result = await axios.get(`/api/content/products/${id}`)
-            commit('ADD_CART_ITEMS', result.data)
             callback('success')
         }
-        catch (e) {
-            callback('error')
+        else {
+            try {
+                const result = await axios.get(`/api/content/products/${id}`)
+                commit('ADD_CART_ITEMS', result.data)
+                callback('success')
+            }
+            catch (e) {
+                callback('error')
+            }
         }
+
     },
     async fetchCart({ commit, state }) {
         for (let index = 0; index < state.items.length; index++) {

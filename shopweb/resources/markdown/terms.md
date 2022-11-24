@@ -1,3 +1,3 @@
-# Terms of Service
+# Điều khoản dịch vụ
 
-Edit this file to define the terms of service for your application.
+Đang cập nhật...

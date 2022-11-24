@@ -47,7 +47,7 @@ const statusPercent = computed(() => {
 </script>
 
 <template>
-    <AppLayout title="Khám phá">
+    <AppLayout :title="`Đơn hàng #${order.id}`">
         <!-- HEADER -->
         <template #header>
 

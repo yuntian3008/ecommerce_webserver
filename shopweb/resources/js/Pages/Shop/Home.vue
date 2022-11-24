@@ -92,8 +92,8 @@ onMounted(() => {
                     </div>
                     <div class="basis-3/5 relative">
                         <img class="w-full -mt-20  z-0" :src="homeHeaderSvg" alt="" />
-                        <HeaderProductCard class="absolute right-32 top-32 shadow-none" size="large"
-                            :imgAspectRatio="'4/3'" name="Simple Machine" price="$40"
+                        <HeaderProductCard class="absolute right-32 top-32 shadow-none rounded-lg" size="large"
+                            :imgAspectRatio="'4/3'" name="Mixissua Machine" price="2.499.000 đ"
                             image="http://localhost:8000/dev_assets/cm1.webp" />
                     </div>
                 </div>

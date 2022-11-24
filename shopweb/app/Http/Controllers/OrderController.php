@@ -40,14 +40,13 @@ class OrderController extends Controller
             $totalAmount +=  $value['unit_price'] * $value['quantity'];
         }
 
-        // dd($orderItems);
 
         $order = $address->orders()->create([
             'total_amount' => $totalAmount,
             'state' => 1,
         ]);
 
-        foreach ($orderItems as $index => $value) {
+        foreach ($orderItems as $index => &$value) {
             $order->products()->attach($value['id'], [
                 'final_unit_price' => $value['unit_price'],
                 'quantity' => $value['quantity']

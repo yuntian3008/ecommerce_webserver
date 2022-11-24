@@ -36,7 +36,7 @@ const specs = computed(() => {
 </script>
 
 <template>
-    <AppLayout title="San pham gi do">
+    <AppLayout :title="product.name">
         <!-- HEADER -->
         <template #header>
 

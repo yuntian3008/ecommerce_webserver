@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[30],{995:function(n,t,e){"use strict";e.r(t);var o={name:"IndexPage",data:function(){return{showModal:!0,value:""}},methods:{}},l=e(17),component=Object(l.a)(o,(function(){return(0,this._self._c)("div",{staticClass:"container mx-auto"})}),[],!1,null,null,null);t.default=component.exports}}]);

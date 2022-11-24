@@ -18,9 +18,6 @@ const props = defineProps({
     addresses: Array
 })
 
-const data = reactive({
-    selected: store.state.items,
-})
 
 const order = reactive({
     address_id: null,
@@ -44,12 +41,14 @@ const checkout = () => {
         order_items: [...orderItems.value]
     }
 
+    // console.log(data)
+
     if (data.order_items.length == 0) {
         toast.error("Giỏ hàng trống, không thể đặt hàng")
         return
     }
 
-    store.commit('cart/REMOVE_ALL_CART_ITEMS');
+    store.commit('cart/SPLICE_CART');
 
     Inertia.post(url, data)
 }
@@ -59,7 +58,7 @@ const checkout = () => {
 </script>
 
 <template>
-    <AppLayout title="Khám phá">
+    <AppLayout title="Thanh toán">
         <!-- HEADER -->
         <template #header>
 
@@ -77,7 +76,7 @@ const checkout = () => {
                             <span>Tổng</span>
                         </div>
                         <Link :href="item.data.url" class="inline-flex gap-x-4 p-5 items-center"
-                            v-for="(item, i) in store.state.cart.items" :key="i">
+                            v-for="(item, i) in store.state.cart.selected" :key="i">
                         <img :src="item.data.image.url" class="w-16 rounded-md border border-gray-200">
                         <div class="grow flex flex-col gap-y-2">
                             <span class="font-bold text-md leading-none">{{ item.data.name }}</span>

@@ -87,7 +87,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <AppLayout title="Khám phá">
+    <AppLayout :title="category.name">
         <!-- HEADER -->
         <template #header>
 

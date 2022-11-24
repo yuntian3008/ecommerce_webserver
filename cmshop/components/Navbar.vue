@@ -61,7 +61,7 @@
               class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
               <span class="sr-only">Open user menu</span>
-              <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+              <img class="w-8 h-8 rounded-full" :src="`https://ui-avatars.com/api/?name=${auth.user.name}&background=random&size=128&length=1`"
                 alt="user photo">
             </button>
             <!-- Dropdown menu -->

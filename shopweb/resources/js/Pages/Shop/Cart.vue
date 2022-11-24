@@ -63,9 +63,11 @@ const deleteCartItems = async (i) => {
 
 const checkout = () => {
 
-    store.commit("SET_SELECTED", data.selected)
+    store.commit("cart/SET_SELECTED", data.selected)
 
-    Inertia.get(route('checkout'));
+//     console.log(store.state.cart.selected)
+
+   Inertia.get(route('checkout'));
 }
 
 watch(
@@ -80,13 +82,12 @@ watch(
 </script>
 
 <template>
-    <AppLayout title="Khám phá">
+    <AppLayout title="Giỏ hàng">
         <!-- HEADER -->
         <template #header>
 
         </template>
 
-        <template v-slot="scope">
             <div class="container mx-auto mb-8">
                 <div class="flex my-4 py-0 justify-between items-center">
                     <div class="flex gap-4">
@@ -326,7 +327,6 @@ watch(
                 </div> -->
             </div>
 
-        </template>
 
 
 
