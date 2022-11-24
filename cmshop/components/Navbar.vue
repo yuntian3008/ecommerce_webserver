@@ -21,7 +21,7 @@
             </svg>
             <span class="sr-only">Toggle sidebar</span>
           </button>
-          <a href="https://flowbite.com" class="flex mr-4">
+          <a href="https//admin.mms.clelot.com" class="flex mr-4">
             <img src="~/assets/logo-transparent.png" class="mr-3 h-8" alt="FlowBite Logo" />
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MeoMeoShop</span>
           </a>
