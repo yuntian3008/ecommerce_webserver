@@ -27,12 +27,7 @@ use Illuminate\Support\Str;
 Route::get('/', [HomeController::class,'index'])->name('home');
 
 
-Route::get('/product/{product:slug}', function (Product $product) {
-    // $request->session()->flash('flash.dangerBanner', 'Yay it works!');
-    return Inertia::render('Shop/Product',[
-        'product' => $product
-    ]);
-})->name('product');
+Route::get('/product/{product:slug}', [HomeController::class, 'product'])->name('product');
 
 Route::get('/category/{category:slug}', [HomeController::class, 'category'])->name('category');
 

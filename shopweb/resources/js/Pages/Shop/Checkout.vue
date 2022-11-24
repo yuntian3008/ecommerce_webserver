@@ -27,7 +27,7 @@ const order = reactive({
 })
 
 const orderItems = computed(() => {
-    return store.state.cart.items.map(({ data, ...rest }) => {
+    return store.state.cart.selected.map(({ data, ...rest }) => {
         return rest
     })
 })

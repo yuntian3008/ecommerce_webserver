@@ -51,4 +51,10 @@ class Administrator extends Authenticatable
         return $this->hasMany(AdministratorScope::class);
     }
 
+
+    // public function hasScope() {
+    //     Admi
+
+    // }
+
 }

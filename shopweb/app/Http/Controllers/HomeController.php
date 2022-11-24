@@ -115,4 +115,12 @@ class HomeController extends Controller
             'params' => $request->all(),
         ]);
     }
+
+    public function product(Product $product)
+    {
+        $product->productImages;
+        return Inertia::render('Shop/Product',[
+            'product' => $product,
+        ]);
+    }
 }

@@ -1,5 +1,5 @@
 <template>
-    <a :href="props.product.url" class="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <Link :href="props.product.url" class="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <img class="p-8 rounded-t-lg" :src="props.product.image.url" alt="product image" />
         <div class="px-5 pb-5">
 
@@ -56,11 +56,11 @@
 </a>
             </div>
         </div>
-    </a>
+    </Link>
 </template>
 
 <script setup>
-
+import { Link } from '@inertiajs/inertia-vue3';
 const props = defineProps({
     product: Object,
 })

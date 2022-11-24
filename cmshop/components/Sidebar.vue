@@ -71,8 +71,8 @@
             </button>
             <ul ref="dropdownSales" class="hidden py-2 space-y-2">
               <li>
-                <a href="#"
-                  class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Xử lí đơn đặt hàng</a>
+                <NuxtLink to="/sales/order"
+                  class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Xử lí đơn đặt hàng</NuxtLink>
               </li>
               <li>
                 <a href="#"
@@ -136,7 +136,7 @@
           </li>
         </ul>
         <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
-          <li>
+          <!-- <li>
             <a href="#"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
               <svg aria-hidden="true"
@@ -149,7 +149,7 @@
               </svg>
               <span class="ml-3">Tài liệu</span>
             </a>
-          </li>
+          </li> -->
           <!-- <li>
             <a href="#"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
@@ -163,7 +163,7 @@
               <span class="ml-3">Components</span>
             </a>
           </li> -->
-          <li>
+          <!-- <li>
             <a href="#"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
               <svg aria-hidden="true"
@@ -175,7 +175,7 @@
               </svg>
               <span class="ml-3">Trợ giúp</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
       <div

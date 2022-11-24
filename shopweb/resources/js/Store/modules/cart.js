@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const state = {
     items: [],
+    selected: [],
 }
 const getters = {
     getItem: (state) => (id) => {
@@ -29,6 +30,9 @@ const getters = {
     }
 }
 const mutations = {
+    SET_SELECTED(state, payload) {
+        state.selected = payload
+    },
     ADD_CART_ITEMS(state, payload) {
         state.items.push({
             id: payload.id,

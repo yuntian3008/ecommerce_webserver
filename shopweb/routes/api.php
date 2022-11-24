@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\AdministratorScopeController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CategoryProductController;
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\ProductImageController;
 use App\Http\Controllers\Api\V1\ScopeController;
@@ -53,6 +54,10 @@ Route::name('admin.')->group(function () {
         Route::apiResource('categories.products', CategoryProductController::class)->only(['index','store']);
         Route::apiResource('users',UserController::class)->only(['index','update']);
         Route::apiResource('products.product-images', ProductImageController::class)->shallow()->only(['index','store','destroy']);
+    });
+
+    Route::prefix('/sales')->name('sale.')->group(function () {
+        Route::apiResource('orders', OrderController::class)->only(['index','update','show']);
     });
 
     Route::prefix('/account')->name('account.')->group(function () {
