@@ -94,7 +94,7 @@ onMounted(() => {
                         <img class="w-full -mt-20  z-0" :src="homeHeaderSvg" alt="" />
                         <HeaderProductCard class="absolute right-32 top-32 shadow-none rounded-lg" size="large"
                             :imgAspectRatio="'4/3'" name="Mixissua Machine" price="2.499.000 đ"
-                            image="http://localhost:8000/dev_assets/cm1.webp" />
+                            image="https://mms.cielot.com/storage/product-image/xTie4U-1669110883.jpg" />
                     </div>
                 </div>
             </div>
