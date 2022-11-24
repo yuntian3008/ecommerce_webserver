@@ -139,7 +139,7 @@ export default {
       let app = this;
       try {
         const result = await this.$axios.patch('/sales/orders/' + this.order.id, {
-          state: this.order.state + 1
+          state: parseInt(this.order.state) + 1
         })
         this.state.success = true
       } catch (e) { }
@@ -161,7 +161,7 @@ export default {
     },
 
     nextStateName() {
-      switch (this.order.state) {
+      switch (parseInt(this.order.state)) {
         case 1:
           return "Xác nhận đơn"
         case 2:

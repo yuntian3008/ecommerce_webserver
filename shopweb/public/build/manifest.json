@@ -545,37 +545,13 @@
       "resources/js/app.js"
     ]
   },
-  "resources/js/Pages/Shop/Product.css": {
-    "file": "assets/Product.4972226e.css",
-    "src": "resources/js/Pages/Shop/Product.css"
-  },
-  "resources/js/Pages/Shop/OrderDetail.css": {
-    "file": "assets/OrderDetail.b4d4acf2.css",
-    "src": "resources/js/Pages/Shop/OrderDetail.css"
-  },
-  "carousel.css": {
-    "file": "assets/carousel.22f1373e.css",
-    "src": "carousel.css"
-  },
-  "resources/js/Pages/Shop/Checkout.css": {
-    "file": "assets/Checkout.b4d4acf2.css",
-    "src": "resources/js/Pages/Shop/Checkout.css"
-  },
   "resources/js/Pages/Shop/Orders.css": {
     "file": "assets/Orders.b4d4acf2.css",
     "src": "resources/js/Pages/Shop/Orders.css"
   },
-  "resources/js/Pages/Shop/Cart.css": {
-    "file": "assets/Cart.b4d4acf2.css",
-    "src": "resources/js/Pages/Shop/Cart.css"
-  },
-  "resources/js/app.css": {
-    "file": "assets/app.f6e96c28.css",
-    "src": "resources/js/app.css"
-  },
-  "resources/js/Pages/Shop/Category.css": {
-    "file": "assets/Category.b4d4acf2.css",
-    "src": "resources/js/Pages/Shop/Category.css"
+  "resources/js/Pages/Shop/OrderDetail.css": {
+    "file": "assets/OrderDetail.b4d4acf2.css",
+    "src": "resources/js/Pages/Shop/OrderDetail.css"
   },
   "resources/js/Pages/Shop/Home.css": {
     "file": "assets/Home.b4d4acf2.css",
@@ -584,5 +560,29 @@
   "resources/js/Pages/Shop/Search.css": {
     "file": "assets/Search.b4d4acf2.css",
     "src": "resources/js/Pages/Shop/Search.css"
+  },
+  "resources/js/Pages/Shop/Product.css": {
+    "file": "assets/Product.4972226e.css",
+    "src": "resources/js/Pages/Shop/Product.css"
+  },
+  "carousel.css": {
+    "file": "assets/carousel.22f1373e.css",
+    "src": "carousel.css"
+  },
+  "resources/js/Pages/Shop/Cart.css": {
+    "file": "assets/Cart.b4d4acf2.css",
+    "src": "resources/js/Pages/Shop/Cart.css"
+  },
+  "resources/js/Pages/Shop/Category.css": {
+    "file": "assets/Category.b4d4acf2.css",
+    "src": "resources/js/Pages/Shop/Category.css"
+  },
+  "resources/js/Pages/Shop/Checkout.css": {
+    "file": "assets/Checkout.b4d4acf2.css",
+    "src": "resources/js/Pages/Shop/Checkout.css"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app.f6e96c28.css",
+    "src": "resources/js/app.css"
   }
 }
