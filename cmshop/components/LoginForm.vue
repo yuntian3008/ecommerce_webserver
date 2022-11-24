@@ -38,8 +38,6 @@
                   <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
                 </div> -->
               </div>
-              <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Quên mật
-                khẩu ?</a>
             </div>
             <button type="button" @click="login"
               class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Đăng
