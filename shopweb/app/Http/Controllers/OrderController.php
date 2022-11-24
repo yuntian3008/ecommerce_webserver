@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
 
     public function index(Request $request) {
-        $orders = Order::with('orderitems')->paginate(8);
+        $orders = $request->user()->orders()->with('orderitems')->paginate(8);
         // foreach ($orders->data as $value) {
         //     $order->da
         // }
