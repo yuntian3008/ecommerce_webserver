@@ -71,6 +71,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        // dd($category);
         return response()->json($category, Response::HTTP_OK);
 
     }
