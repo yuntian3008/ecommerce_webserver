@@ -1,4 +1,7 @@
 # Meomeoshop - Commercial Website
+## Old Version (BlackCat)
+
+- https://github.com/thiensgith/blackcat
 
 ## Base on
 
@@ -7,10 +10,11 @@
 
 ## Technical:
 
-- Laravel
-- VueJS
+- Laravel 9
+- Vue 3
 - InertiaJS
 - TailwindCSS
+- NuxtJS
 
 ## Contributors
 
